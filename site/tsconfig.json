@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+      "outFile": "../output/app.js",
+      "allowJs": true,
+      "sourceMap": true,
+      "target": "ES2021",
+      "strict": true,
+      "removeComments": true,
+      // Disable automatic import of global types by setting to none. This is
+      // due to npm dependencies including typescript files that are picked up
+      // as type imports, even when that folder is excluded from compilation
+      "types": [],
+      "forceConsistentCasingInFileNames": true,
+    },
+    "include": [
+      "./*.js",
+      "./*.ts",
+      "./typings/*.d.ts"
+    ]
+  }

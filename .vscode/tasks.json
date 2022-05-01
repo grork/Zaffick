@@ -1,0 +1,86 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "npm",
+            "script": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "label": "Build",
+            "detail": "Compiles the TS files into the output folder",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            }
+        },
+        {
+            "type": "npm",
+            "label": "Watch for Typescript changes",
+            "script": "watch-compile",
+            "problemMatcher": [
+                "$tsc-watch"
+            ],
+            "isBackground": true,
+            "presentation": {
+                "echo": false,
+                "reveal": "never",
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "group": "watching"
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        {
+            "type": "npm",
+            "label": "Watch for dependency changes",
+            "script": "watch-dependencies",
+            "isBackground": true,
+            "presentation": {
+                "echo": false,
+                "reveal": "never",
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "group": "watching"
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        {
+            "type": "npm",
+            "label": "Serve",
+            "detail": "Serve files with automatic browser loading",
+            "script": "serve",
+            "isBackground": true,
+            "presentation": {
+                "echo": false,
+                "reveal": "never",
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "group": "watching"
+            },
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+        },
+        {
+            "type": "npm",
+            "script": "clean",
+            "label": "Clean outputs",
+            "detail": "Removed all files in the ./outputs folder",
+            "problemMatcher": []
+        }
+    ]
+}

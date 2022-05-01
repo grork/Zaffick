@@ -1,0 +1,17 @@
+{
+    "typescript.tsc.autoDetect": "off",
+    "npm.autoDetect": "off",
+    "codevoid.inner-loop-buddy.defaultUrl": "http://localhost:8888",
+    "codevoid.inner-loop-buddy.autoOpenDelay": 4000,
+    "codevoid.inner-loop-buddy.monitoredTasks": [
+        {
+            "definition": {
+                "type": "npm",
+                "script": "serve"
+            }
+        }
+    ],
+    "search.exclude": {
+        "output/**": true
+    }
+}

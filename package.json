@@ -1,0 +1,72 @@
+{
+  "name": "codevoid.zaffick",
+  "version": "0.0.1",
+  "description": "Website to help Zack get traffic updates",
+  "main": "app.js",
+  "scripts": {
+    "build": "tsc -p site",
+    "clean": "rimraf output",
+    "compile": "tsc -p site",
+    "copy-dependencies": "copyfiles -u 1 \"site/**/*.html\" output && copyfiles -u 1 \"site/**/*.css\" output",
+    "postbuild": "npm run copy-dependencies",
+    "serve": "netlify dev",
+    "serve-static": "browser-sync start --server output --watch --no-ui --listen localhost --no-online --no-open --reload-debounce 250",
+    "watch-all": "npm-watch",
+    "watch-compile": "tsc -p site --watch",
+    "watch-dependencies": "npm-watch copy-dependencies"
+  },
+  "watch": {
+    "copy-dependencies": {
+      "patterns": [
+        "."
+      ],
+      "ignore": [
+        ".vscode",
+        ".netlify",
+        "netlify",
+        "node_modules",
+        "output",
+        "*.ts"
+      ],
+      "extensions": "js,css,html"
+    },
+    "compile": {
+      "patterns": [
+        "."
+      ],
+      "ignore": [
+        ".netlify",
+        ".vscode",
+        "netlify",
+        "node_modules",
+        "output"
+      ],
+      "extensions": "ts"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grork/zaffick",
+    "directory": "web"
+  },
+  "keywords": [
+    "traffic",
+    "typescript",
+    "javascript"
+  ],
+  "author": "Dominic Hopton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/grork/zaffick/issues"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^1.0.0",
+    "@types/node": "^17.0.31",
+    "browser-sync": "^2.27.9",
+    "copyfiles": "^2.4.1",
+    "netlify-cli": "^10.1.0",
+    "npm-watch": "^0.11.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.6.4"
+  }
+}
