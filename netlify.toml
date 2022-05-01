@@ -1,3 +1,6 @@
+[build]
+  publish = "output/"
+
 [dev]
   command = "npm run serve-static"
   targetPort = 3000
