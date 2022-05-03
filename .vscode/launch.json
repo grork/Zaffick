@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Debug Edge",
             "cleanUp": "onlyTab",
-            "url": "http://localhost:3000",
+            "url": "http://localhost:8888",
             "webRoot": "${workspaceFolder}/output",
             "preLaunchTask": "Serve HTTP"
         },
@@ -18,7 +18,7 @@
             "request": "launch",
             "name": "Debug Chrome",
             "cleanUp": "onlyTab",
-            "url": "http://localhost:3000",
+            "url": "http://localhost:8888",
             "webRoot": "${workspaceFolder}/output",
             "preLaunchTask": "Serve HTTP"
         },
