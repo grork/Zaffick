@@ -10,7 +10,7 @@
     "copy-dependencies": "copyfiles -u 1 \"site/**/*.html\" output && copyfiles -u 1 \"site/**/*.css\" output",
     "postbuild": "npm run copy-dependencies",
     "serve": "netlify dev",
-    "serve-static": "browser-sync start --server output --watch --no-ui --listen localhost --no-online --no-open --reload-debounce 250",
+    "serve-static": "browser-sync start --server output --watch --no-ui --listen localhost --no-online --no-open --no-ghost-mode --reload-debounce 250",
     "watch-all": "npm-watch",
     "watch-compile": "tsc -p site --watch",
     "watch-dependencies": "npm-watch copy-dependencies"

@@ -36,9 +36,6 @@
                 "panel": "dedicated",
                 "showReuseMessage": false,
                 "group": "watching"
-            },
-            "runOptions": {
-                "runOn": "folderOpen"
             }
         },
         {
@@ -52,28 +49,7 @@
                 "panel": "dedicated",
                 "showReuseMessage": false,
                 "group": "watching"
-            },
-            "runOptions": {
-                "runOn": "folderOpen"
             }
-        },
-        {
-            "type": "npm",
-            "label": "Serve",
-            "detail": "Serve files with automatic browser loading",
-            "script": "serve",
-            "isBackground": true,
-            "presentation": {
-                "echo": false,
-                "reveal": "never",
-                "panel": "dedicated",
-                "showReuseMessage": false,
-                "group": "watching"
-            },
-            "problemMatcher": [],
-            "runOptions": {
-                "runOn": "folderOpen"
-            },
         },
         {
             "type": "npm",
@@ -81,6 +57,38 @@
             "label": "Clean outputs",
             "detail": "Removed all files in the ./outputs folder",
             "problemMatcher": []
+        },
+        {
+            "label": "Serve HTTP",
+            "type": "process",
+            "command": "node",
+            "args": [
+                "--inspect=9998",
+                "${workspaceFolder}/node_modules/.bin/netlify",
+                "dev"
+            ],
+            "isBackground": true,
+            "problemMatcher": [],
+            "presentation": {
+                "echo": false,
+                "reveal": "never",
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "group": "watching"
+            }
+        },
+        {
+            "label": "Serve",
+            "dependsOn": [
+                "Watch for dependency changes",
+                "Watch for Typescript changes",
+                "Serve HTTP"
+            ],
+            "dependsOrder": "parallel",
+            "problemMatcher": [],
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
         }
     ]
 }

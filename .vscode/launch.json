@@ -7,20 +7,41 @@
         {
             "type": "pwa-msedge",
             "request": "launch",
-            "name": "Launch Edge against Browser Sync",
+            "name": "Debug Edge",
             "cleanUp": "onlyTab",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/output",
-            "preLaunchTask": "Serve"
+            "preLaunchTask": "Serve HTTP"
         },
         {
             "type": "pwa-chrome",
             "request": "launch",
-            "name": "Launch Chrome against Browser Sync",
+            "name": "Debug Chrome",
             "cleanUp": "onlyTab",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/output",
-            "preLaunchTask": "Serve"
+            "preLaunchTask": "Serve HTTP"
+        },
+        {
+            "name": "Debug Functions",
+            "type": "node",
+            "request": "attach",
+            "port": 9998,
+            "skipFiles": ["<node_internals>/**"],
+            "outFiles": ["${workspaceFolder}/.netlify/functions-serve/**/*.js"],
+            "preLaunchTask": "Serve HTTP"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Debug Edge + Functions",
+            "configurations": [ "Debug Functions", "Debug Edge" ],
+            "stopAll": true
+        },
+        {
+            "name": "Debug Chrome + Functions",
+            "configurations": [ "Debug Functions", "Debug Chrome" ],
+            "stopAll": true
         }
     ]
 }
