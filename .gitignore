@@ -108,3 +108,6 @@ dist
 
 # Stupid Mac
 .DS_Store
+
+# Don't include out build outputs
+output
