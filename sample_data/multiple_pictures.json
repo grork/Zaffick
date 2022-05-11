@@ -1,0 +1,152 @@
+{
+    "created_at": "Thu May 05 20:02:21 +0000 2022",
+    "id": 1522305720237973504,
+    "id_str": "1522305720237973504",
+    "full_text": "From the archives - I present to you an informational flyer from 2007 with a sweet photo of the old floating bridge, and some future plans we had in mind back then. A lot has changed since then! https:\/\/t.co\/XgWZe9tp2B",
+    "truncated": false,
+    "display_text_range": [
+        0,
+        194
+    ],
+    "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "user_mentions": [],
+        "urls": [],
+        "media": [
+            {
+                "id": 1522305714009477120,
+                "id_str": "1522305714009477120",
+                "indices": [
+                    195,
+                    218
+                ],
+                "media_url": "http:\/\/pbs.twimg.com\/media\/FSBQ-zsVEAAQiRh.jpg",
+                "media_url_https": "https:\/\/pbs.twimg.com\/media\/FSBQ-zsVEAAQiRh.jpg",
+                "url": "https:\/\/t.co\/XgWZe9tp2B",
+                "display_url": "pic.twitter.com\/XgWZe9tp2B",
+                "expanded_url": "https:\/\/twitter.com\/wsdot_520\/status\/1522305720237973504\/photo\/1",
+                "type": "photo",
+                "sizes": {
+                    "thumb": {
+                        "w": 150,
+                        "h": 150,
+                        "resize": "crop"
+                    },
+                    "large": {
+                        "w": 900,
+                        "h": 1200,
+                        "resize": "fit"
+                    },
+                    "small": {
+                        "w": 510,
+                        "h": 680,
+                        "resize": "fit"
+                    },
+                    "medium": {
+                        "w": 900,
+                        "h": 1200,
+                        "resize": "fit"
+                    }
+                }
+            }
+        ]
+    },
+    "extended_entities": {
+        "media": [
+            {
+                "id": 1522305714009477120,
+                "id_str": "1522305714009477120",
+                "indices": [
+                    195,
+                    218
+                ],
+                "media_url": "http:\/\/pbs.twimg.com\/media\/FSBQ-zsVEAAQiRh.jpg",
+                "media_url_https": "https:\/\/pbs.twimg.com\/media\/FSBQ-zsVEAAQiRh.jpg",
+                "url": "https:\/\/t.co\/XgWZe9tp2B",
+                "display_url": "pic.twitter.com\/XgWZe9tp2B",
+                "expanded_url": "https:\/\/twitter.com\/wsdot_520\/status\/1522305720237973504\/photo\/1",
+                "type": "photo",
+                "sizes": {
+                    "thumb": {
+                        "w": 150,
+                        "h": 150,
+                        "resize": "crop"
+                    },
+                    "large": {
+                        "w": 900,
+                        "h": 1200,
+                        "resize": "fit"
+                    },
+                    "small": {
+                        "w": 510,
+                        "h": 680,
+                        "resize": "fit"
+                    },
+                    "medium": {
+                        "w": 900,
+                        "h": 1200,
+                        "resize": "fit"
+                    }
+                }
+            },
+            {
+                "id": 1522304920975642624,
+                "id_str": "1522304920975642624",
+                "indices": [
+                    195,
+                    218
+                ],
+                "media_url": "http:\/\/pbs.twimg.com\/media\/FSBQQpaVEAATvtZ.jpg",
+                "media_url_https": "https:\/\/pbs.twimg.com\/media\/FSBQQpaVEAATvtZ.jpg",
+                "url": "https:\/\/t.co\/XgWZe9tp2B",
+                "display_url": "pic.twitter.com\/XgWZe9tp2B",
+                "expanded_url": "https:\/\/twitter.com\/wsdot_520\/status\/1522305720237973504\/photo\/1",
+                "type": "photo",
+                "sizes": {
+                    "thumb": {
+                        "w": 150,
+                        "h": 150,
+                        "resize": "crop"
+                    },
+                    "small": {
+                        "w": 510,
+                        "h": 680,
+                        "resize": "fit"
+                    },
+                    "large": {
+                        "w": 1536,
+                        "h": 2048,
+                        "resize": "fit"
+                    },
+                    "medium": {
+                        "w": 900,
+                        "h": 1200,
+                        "resize": "fit"
+                    }
+                }
+            }
+        ]
+    },
+    "source": "<a href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\">Twitter Web App<\/a>",
+    "in_reply_to_status_id": null,
+    "in_reply_to_status_id_str": null,
+    "in_reply_to_user_id": null,
+    "in_reply_to_user_id_str": null,
+    "in_reply_to_screen_name": null,
+    "user": {
+        "id": 2746905420,
+        "id_str": "2746905420"
+    },
+    "geo": null,
+    "coordinates": null,
+    "place": null,
+    "contributors": null,
+    "is_quote_status": false,
+    "retweet_count": 0,
+    "favorite_count": 2,
+    "favorited": false,
+    "retweeted": false,
+    "possibly_sensitive": false,
+    "lang": "en"
+}

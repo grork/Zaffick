@@ -1,0 +1,116 @@
+{
+    "created_at": "Sun May 08 16:56:35 +0000 2022",
+    "id": 1523346134017609728,
+    "id_str": "1523346134017609728",
+    "full_text": "Look for water on the roadway on EB 520 due to a leaky pipe in the near by work zone. Crews are on their way to repair; please use caution through this area. https:\/\/t.co\/MMFh8en38u",
+    "truncated": false,
+    "display_text_range": [
+        0,
+        157
+    ],
+    "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "user_mentions": [],
+        "urls": [],
+        "media": [
+            {
+                "id": 1523345722799652864,
+                "id_str": "1523345722799652864",
+                "indices": [
+                    158,
+                    181
+                ],
+                "media_url": "http:\/\/pbs.twimg.com\/media\/FSQC3SWVgAA5cBr.jpg",
+                "media_url_https": "https:\/\/pbs.twimg.com\/media\/FSQC3SWVgAA5cBr.jpg",
+                "url": "https:\/\/t.co\/MMFh8en38u",
+                "display_url": "pic.twitter.com\/MMFh8en38u",
+                "expanded_url": "https:\/\/twitter.com\/wsdot_520\/status\/1523346134017609728\/photo\/1",
+                "type": "photo",
+                "sizes": {
+                    "thumb": {
+                        "w": 150,
+                        "h": 150,
+                        "resize": "crop"
+                    },
+                    "large": {
+                        "w": 1420,
+                        "h": 807,
+                        "resize": "fit"
+                    },
+                    "medium": {
+                        "w": 1200,
+                        "h": 682,
+                        "resize": "fit"
+                    },
+                    "small": {
+                        "w": 680,
+                        "h": 386,
+                        "resize": "fit"
+                    }
+                }
+            }
+        ]
+    },
+    "extended_entities": {
+        "media": [
+            {
+                "id": 1523345722799652864,
+                "id_str": "1523345722799652864",
+                "indices": [
+                    158,
+                    181
+                ],
+                "media_url": "http:\/\/pbs.twimg.com\/media\/FSQC3SWVgAA5cBr.jpg",
+                "media_url_https": "https:\/\/pbs.twimg.com\/media\/FSQC3SWVgAA5cBr.jpg",
+                "url": "https:\/\/t.co\/MMFh8en38u",
+                "display_url": "pic.twitter.com\/MMFh8en38u",
+                "expanded_url": "https:\/\/twitter.com\/wsdot_520\/status\/1523346134017609728\/photo\/1",
+                "type": "photo",
+                "sizes": {
+                    "thumb": {
+                        "w": 150,
+                        "h": 150,
+                        "resize": "crop"
+                    },
+                    "large": {
+                        "w": 1420,
+                        "h": 807,
+                        "resize": "fit"
+                    },
+                    "medium": {
+                        "w": 1200,
+                        "h": 682,
+                        "resize": "fit"
+                    },
+                    "small": {
+                        "w": 680,
+                        "h": 386,
+                        "resize": "fit"
+                    }
+                }
+            }
+        ]
+    },
+    "source": "<a href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\">Twitter Web App<\/a>",
+    "in_reply_to_status_id": null,
+    "in_reply_to_status_id_str": null,
+    "in_reply_to_user_id": null,
+    "in_reply_to_user_id_str": null,
+    "in_reply_to_screen_name": null,
+    "user": {
+        "id": 2746905420,
+        "id_str": "2746905420"
+    },
+    "geo": null,
+    "coordinates": null,
+    "place": null,
+    "contributors": null,
+    "is_quote_status": false,
+    "retweet_count": 0,
+    "favorite_count": 3,
+    "favorited": false,
+    "retweeted": false,
+    "possibly_sensitive": false,
+    "lang": "en"
+}

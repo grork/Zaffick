@@ -1,0 +1,158 @@
+{
+    "created_at": "Fri May 06 21:26:00 +0000 2022",
+    "id": 1522689158598303744,
+    "id_str": "1522689158598303744",
+    "full_text": "Who's excited for Opening Day?\u26f5\ufe0f A heads up from us and @wsdot_traffic about closures happening tomorrow, Saturday, May 7, in the Montlake neighborhood:\n- Montlake Bridge will be closed\n- Westbound off-ramp from 520 to Montlake Blvd closed\nFull details: https:\/\/t.co\/RlrSs6WIoY https:\/\/t.co\/JTRlbRulIl",
+    "truncated": false,
+    "display_text_range": [
+        0,
+        277
+    ],
+    "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "user_mentions": [
+            {
+                "screen_name": "wsdot_traffic",
+                "name": "WSDOT Traffic",
+                "id": 17900666,
+                "id_str": "17900666",
+                "indices": [
+                    56,
+                    70
+                ]
+            }
+        ],
+        "urls": [
+            {
+                "url": "https:\/\/t.co\/RlrSs6WIoY",
+                "expanded_url": "http:\/\/sr520construction.com\/activity\/view\/68247",
+                "display_url": "sr520construction.com\/activity\/view\/\u2026",
+                "indices": [
+                    254,
+                    277
+                ]
+            }
+        ],
+        "media": [
+            {
+                "id": 1522681087289266176,
+                "id_str": "1522681087289266176",
+                "indices": [
+                    278,
+                    301
+                ],
+                "media_url": "http:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1522681087289266176\/pu\/img\/2FN8OoE_0ZFnICn5.jpg",
+                "media_url_https": "https:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1522681087289266176\/pu\/img\/2FN8OoE_0ZFnICn5.jpg",
+                "url": "https:\/\/t.co\/JTRlbRulIl",
+                "display_url": "pic.twitter.com\/JTRlbRulIl",
+                "expanded_url": "https:\/\/twitter.com\/wsdot_520\/status\/1522689158598303744\/video\/1",
+                "type": "photo",
+                "sizes": {
+                    "thumb": {
+                        "w": 150,
+                        "h": 150,
+                        "resize": "crop"
+                    },
+                    "large": {
+                        "w": 220,
+                        "h": 220,
+                        "resize": "fit"
+                    },
+                    "small": {
+                        "w": 220,
+                        "h": 220,
+                        "resize": "fit"
+                    },
+                    "medium": {
+                        "w": 220,
+                        "h": 220,
+                        "resize": "fit"
+                    }
+                }
+            }
+        ]
+    },
+    "extended_entities": {
+        "media": [
+            {
+                "id": 1522681087289266176,
+                "id_str": "1522681087289266176",
+                "indices": [
+                    278,
+                    301
+                ],
+                "media_url": "http:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1522681087289266176\/pu\/img\/2FN8OoE_0ZFnICn5.jpg",
+                "media_url_https": "https:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1522681087289266176\/pu\/img\/2FN8OoE_0ZFnICn5.jpg",
+                "url": "https:\/\/t.co\/JTRlbRulIl",
+                "display_url": "pic.twitter.com\/JTRlbRulIl",
+                "expanded_url": "https:\/\/twitter.com\/wsdot_520\/status\/1522689158598303744\/video\/1",
+                "type": "video",
+                "sizes": {
+                    "thumb": {
+                        "w": 150,
+                        "h": 150,
+                        "resize": "crop"
+                    },
+                    "large": {
+                        "w": 220,
+                        "h": 220,
+                        "resize": "fit"
+                    },
+                    "small": {
+                        "w": 220,
+                        "h": 220,
+                        "resize": "fit"
+                    },
+                    "medium": {
+                        "w": 220,
+                        "h": 220,
+                        "resize": "fit"
+                    }
+                },
+                "video_info": {
+                    "aspect_ratio": [
+                        1,
+                        1
+                    ],
+                    "duration_millis": 2500,
+                    "variants": [
+                        {
+                            "content_type": "application\/x-mpegURL",
+                            "url": "https:\/\/video.twimg.com\/ext_tw_video\/1522681087289266176\/pu\/pl\/rV7M7bAey8Z1r_yO.m3u8?tag=12&container=fmp4"
+                        },
+                        {
+                            "bitrate": 432000,
+                            "content_type": "video\/mp4",
+                            "url": "https:\/\/video.twimg.com\/ext_tw_video\/1522681087289266176\/pu\/vid\/220x220\/6-90kach3quJd3du.mp4?tag=12"
+                        }
+                    ]
+                },
+                "additional_media_info": {
+                    "monetizable": false
+                }
+            }
+        ]
+    },
+    "source": "<a href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\">Twitter Web App<\/a>",
+    "in_reply_to_status_id": null,
+    "in_reply_to_status_id_str": null,
+    "in_reply_to_user_id": null,
+    "in_reply_to_user_id_str": null,
+    "in_reply_to_screen_name": null,
+    "user": {
+        "id": 2746905420,
+        "id_str": "2746905420"
+    },
+    "geo": null,
+    "coordinates": null,
+    "place": null,
+    "contributors": null,
+    "is_quote_status": false,
+    "retweet_count": 3,
+    "favorite_count": 6,
+    "favorited": false,
+    "retweeted": false,
+    "possibly_sensitive": false,
+    "lang": "en"
+}

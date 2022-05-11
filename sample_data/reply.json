@@ -1,0 +1,37 @@
+{
+    "created_at": "Fri May 06 16:02:56 +0000 2022",
+    "id": 1522607857862029312,
+    "id_str": "1522607857862029312",
+    "full_text": "And we are CLEAR, on southbound I-405 at SR 522. All lanes open!",
+    "truncated": false,
+    "display_text_range": [
+        0,
+        64
+    ],
+    "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "user_mentions": [],
+        "urls": []
+    },
+    "source": "<a href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\">Twitter Web App<\/a>",
+    "in_reply_to_status_id": 1522602035601821698,
+    "in_reply_to_status_id_str": "1522602035601821698",
+    "in_reply_to_user_id": 17900666,
+    "in_reply_to_user_id_str": "17900666",
+    "in_reply_to_screen_name": "wsdot_traffic",
+    "user": {
+        "id": 17900666,
+        "id_str": "17900666"
+    },
+    "geo": null,
+    "coordinates": null,
+    "place": null,
+    "contributors": null,
+    "is_quote_status": false,
+    "retweet_count": 0,
+    "favorite_count": 0,
+    "favorited": false,
+    "retweeted": false,
+    "lang": "en"
+}
