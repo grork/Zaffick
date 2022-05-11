@@ -1,9 +1,18 @@
 type LatestTweets = string[];
 
+const BASE_FUNCTION_PATH = ".netlify/functions/latest";
+
 async function loadTopTweets() {
     const timeline = document.querySelector("[data-id='timeline']")!;
     timeline.innerHTML = "";
-    const result: LatestTweets = await (await fetch(".netlify/functions/latest")).json();
+
+    const params = new URLSearchParams(window.location.search);
+    let function_query = BASE_FUNCTION_PATH;
+    if (params.get("canned") === "true") {
+        function_query += "?canned=true";
+    }
+
+    const result: LatestTweets = await (await fetch(function_query)).json();
 
     for (let m of result) {
         const logLine = document.createElement("div");

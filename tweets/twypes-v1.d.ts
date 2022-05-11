@@ -1,5 +1,5 @@
 export declare interface Tweet {
-    id: string,
+    id_str: string,
     full_text: string,
     truncated: boolean
 }
