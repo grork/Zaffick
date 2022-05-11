@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
-import * as twypes from "./twypes";
+import type * as twypesv1 from "./twypes-v1";
+import type * as twypesv2 from "./twypes-v2";
 
 const fetchOptions = {
     headers: {
@@ -12,12 +13,21 @@ async function getFromTwitterWithType<T>(url): Promise<T> {
     return result;
 }
 
-async function getUserDetails(): Promise<twypes.SingleUserLookup> {
-    return getFromTwitterWithType<twypes.SingleUserLookup>("https://api.twitter.com/2/users/by/username/wsdot_traffic");
+
+const v2 = {
+    async getUserDetails(): Promise<twypesv2.SingleUserLookup > {
+        return getFromTwitterWithType("https://api.twitter.com/2/users/by/username/wsdot_traffic");
+    },
+
+    async getTimelineForUserById(user_id: string): Promise<twypesv2.UserTimeline > {
+        return getFromTwitterWithType(`https://api.twitter.com/2/users/${user_id}/tweets`);
+    }
 }
 
-async function getTimelineForUser(user_id: string): Promise<twypes.UserTimeline> {
-    return getFromTwitterWithType<twypes.UserTimeline>(`https://api.twitter.com/2/users/${user_id}/tweets`);
-}
+const v1 = {
+    async getTimeLineForUserByHandle(screen_name: string): Promise<twypesv1.Tweet[]> {
+        return getFromTwitterWithType(`https://api.twitter.com/1.1/statuses/user_timeline.json?trim_user=true&tweet_mode=extended&screen_name=${screen_name}`);
+    }
+};
 
-export { getTimelineForUser }
+export { v2, v1 }

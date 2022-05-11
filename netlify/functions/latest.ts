@@ -1,9 +1,9 @@
 import * as nfunc from "@netlify/functions";
-import { getTimelineForUser } from "../../tweets/timeline";
+import { v1 } from "../../tweets/timeline";
 
 async function handler(): Promise<nfunc.HandlerResponse> {
-    const result = await getTimelineForUser("17900666");
-    const body = result.data.map((t) => t.text);
+    const result = await v1.getTimeLineForUserByHandle("wsdot_traffic");
+    const body = result.map((t) => t.full_text);
 
     return {
         statusCode: 200,
