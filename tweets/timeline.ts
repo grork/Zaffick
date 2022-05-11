@@ -13,7 +13,6 @@ async function getFromTwitterWithType<T>(url): Promise<T> {
     return result;
 }
 
-
 const v2 = {
     async getUserDetails(): Promise<twypesv2.SingleUserLookup > {
         return getFromTwitterWithType("https://api.twitter.com/2/users/by/username/wsdot_traffic");
