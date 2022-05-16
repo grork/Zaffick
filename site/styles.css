@@ -41,6 +41,17 @@ h1.page-header {
     border-bottom-width: 1px;
 }
 
+.tweet-container > .tweet-container {
+    font-size: 0.9em;
+    font-style: italic;
+    opacity: 0.5;
+}
+
+.tweet-type {
+    font-size: 8px;
+    font-family: sans-serif;
+}
+
 button.refresh-button {
     font-size: 1.5em;
 }

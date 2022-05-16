@@ -1,6 +1,29 @@
-import type { LatestResponse } from "../typings/api";
+import type * as api from "../typings/api";
 
 const BASE_FUNCTION_PATH = ".netlify/functions/latest";
+
+function generateTweet(tweet: api.TweetResponse): HTMLElement {
+    const container = document.createElement("div");
+    container.classList.add("tweet-container");
+
+    const tweetContent = document.createElement("div");
+    tweetContent.classList.add("tweet-content");
+    tweetContent.innerHTML = tweet.content;
+    container.appendChild(tweetContent);
+
+    if (tweet.type === "quote") {
+        const childTweet = generateTweet(tweet.quotedTweet);
+        container.appendChild(childTweet);
+    }
+
+    const tweetType = document.createElement("div");
+    tweetType.classList.add("tweet-type");
+    tweetType.innerText = tweet.type;
+
+    container.appendChild(tweetType);
+
+    return container;
+}
 
 async function loadTopTweets() {
     const timeline = document.querySelector("[data-id='timeline']")!;
@@ -12,13 +35,11 @@ async function loadTopTweets() {
         function_query += "?canned=true";
     }
 
-    const result: LatestResponse = await (await fetch(function_query)).json();
+    const result: api.LatestResponse = await (await fetch(function_query)).json();
     for (let m of result.tweets) {
-        const logLine = document.createElement("div");
-        logLine.classList.add("tweet-container");
-        logLine.innerHTML = m.content;
+        const tweet = generateTweet(m);
 
-        timeline.appendChild(logLine);
+        timeline.appendChild(tweet);
     }
 }
 

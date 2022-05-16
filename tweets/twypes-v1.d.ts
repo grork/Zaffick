@@ -10,5 +10,9 @@ export declare interface Tweet {
     full_text: string,
     truncated: boolean,
     display_text_range: [number, number],
-    entities: { urls: UrlEntity[] }
+    entities: { urls: UrlEntity[] },
+    in_reply_to_status_id_str?: string;
+    is_quote_status?: boolean;
+    retweeted_status?: Tweet;
+    quoted_status?: Tweet;
 }
