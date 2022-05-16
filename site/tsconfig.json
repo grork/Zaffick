@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-      "outFile": "../output/app.js",
+      "outDir": "../output",
       "allowJs": true,
       "sourceMap": true,
       "target": "ES2021",
@@ -13,8 +13,7 @@
       "forceConsistentCasingInFileNames": true,
     },
     "include": [
-      "./*.js",
       "./*.ts",
-      "./typings/*.d.ts"
+      "../typings/*.d.ts"
     ]
   }

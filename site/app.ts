@@ -1,4 +1,4 @@
-type LatestTweets = string[];
+import type { LatestResponse } from "../typings/api";
 
 const BASE_FUNCTION_PATH = ".netlify/functions/latest";
 
@@ -12,12 +12,11 @@ async function loadTopTweets() {
         function_query += "?canned=true";
     }
 
-    const result: LatestTweets = await (await fetch(function_query)).json();
-
-    for (let m of result) {
+    const result: LatestResponse = await (await fetch(function_query)).json();
+    for (let m of result.tweets) {
         const logLine = document.createElement("div");
         logLine.classList.add("tweet-container");
-        logLine.innerHTML = m;
+        logLine.innerHTML = m.content;
 
         timeline.appendChild(logLine);
     }

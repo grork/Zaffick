@@ -1,6 +1,7 @@
 import * as nfunc from "@netlify/functions";
 import { v1 } from "../../tweets/timeline";
 import type * as twypes from "../../tweets/twypes-v1";
+import type * as api from "../../typings/api";
 import stitched from "../../sample_data/stitched";
 import * as tt from "twitter-text";
 
@@ -15,11 +16,17 @@ async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse
         result = stitched();
     }
 
-    const body = result.map((t) => {
+    const body: api.LatestResponse = { tweets: [] };
+    body.tweets = result.map((t) => {
         const [start, end] = t.display_text_range;
         const displayText = t.full_text.substring(start, end);
 
-        return tt.autoLink(displayText, { urlEntities: t.entities.urls });
+        const content = tt.autoLink(displayText, { urlEntities: t.entities.urls });
+
+        return {
+            type: "tweet",
+            content,
+        }
     });
 
     return {
