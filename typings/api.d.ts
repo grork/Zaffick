@@ -3,25 +3,22 @@ export declare interface VideoInfo {
     poster: string;
 }
 
-export declare interface StandardTweetResponse {
+declare interface BaseTweet {
+    content: string;
+    images?: string[];
+    video?: VideoInfo;
+}
+
+export declare interface StandardTweetResponse extends BaseTweet {
     type: "tweet";
-    content: string;
-    images?: string[];
-    video?: VideoInfo;
 }
 
-export declare interface ReplyTweetResponse {
+export declare interface ReplyTweetResponse extends BaseTweet {
     type: "reply";
-    content: string;
-    images?: string[];
-    video?: VideoInfo;
 }
 
-export declare interface RetweetResponse {
+export declare interface RetweetResponse extends BaseTweet {
     type: "retweet";
-    content: string;
-    images?: string[];
-    video?: VideoInfo;
 }
 
 export declare interface QuoteTweetResponse {
