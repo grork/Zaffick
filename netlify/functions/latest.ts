@@ -13,7 +13,7 @@ export enum TweetType {
 }
 
 function tweetTypeFromTweet(tweet: twypes.Tweet): TweetType {
-    if (tweet.is_quote_status) {
+    if (tweet.is_quote_status && tweet.quoted_status) {
         return TweetType.Quote;
     }
 
