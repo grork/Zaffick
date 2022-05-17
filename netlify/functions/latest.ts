@@ -36,9 +36,42 @@ function getContentFromTweet(tweet: twypes.Tweet): string {
     return content;
 }
 
-function tweetToResponse(tweet: twypes.Tweet): Omit<api.TweetResponse, "type"> {
+function getImagesFromTweet(tweet: twypes.Tweet): string[] {
+    const imageEntities = tweet.extended_entities?.media?.filter((media): media is twypes.PhotoEntity => media.type === "photo");
+
+    if (!imageEntities?.length) {
+        return undefined;
+    }
+
+    return imageEntities.map((media) => media.media_url_https);
+}
+
+function getVideoFromTweet(tweet: twypes.Tweet): api.VideoInfo {
+    const video = tweet.extended_entities?.media?.find((media): media is twypes.VideoEntity => media.type === "video");
+    if (!video) {
+        return undefined;
+    }
+
+    // We only want video/mp4 videos 'cause chrome won't play HLS natively
+    const mp4s = video.video_info.variants.filter((info) => info.content_type === "video/mp4");
+    if (!mp4s?.length) {
+        return undefined;
+    }
+
+    // We want the *highest* bitrate
+    mp4s.sort((a, b) => b.bitrate - a.bitrate);
+
     return {
-        content: getContentFromTweet(tweet)
+        url: mp4s[0].url,
+        poster: video.media_url_https,
+    }
+}
+
+function tweetToResponse(tweet: twypes.Tweet): Omit<api.NonQuoteTweetResponse, "type"> {
+    return {
+        content: getContentFromTweet(tweet),
+        images: getImagesFromTweet(tweet),
+        video: getVideoFromTweet(tweet)
     };
 }
 

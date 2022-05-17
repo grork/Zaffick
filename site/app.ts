@@ -2,15 +2,56 @@ import * as api from "../typings/api";
 
 const BASE_FUNCTION_PATH = ".netlify/functions/latest";
 
-function generateTweet(tweet: api.TweetResponse, container: HTMLElement): void {
+function generateImages(imageUrls: string[]): HTMLElement {
+    const container = document.createElement("div");
+    container.classList.add("tweet-images");
+
+    for (const image of imageUrls) {
+        const link = document.createElement("a");
+        link.href = image;
+        link.target = "_blank";
+
+        const imageElement = document.createElement("img");
+        imageElement.src = image;
+        link.appendChild(imageElement)
+
+        container.appendChild(link);
+    }
+
+    return container;
+}
+
+function getVideo(videoInfo: api.VideoInfo): HTMLVideoElement {
+    const videoElement = document.createElement("video");
+    videoElement.preload = "auto";
+    videoElement.src = videoInfo.url;
+    videoElement.controls = true;
+    videoElement.loop = true;
+    videoElement.poster = videoInfo.poster;
+
+    return videoElement;
+}
+
+function generateTweet(tweet: api.NonQuoteTweetResponse, container: HTMLElement): void {
     const tweetContent = document.createElement("div");
     tweetContent.classList.add("tweet-content");
     tweetContent.innerHTML = tweet.content;
     container.appendChild(tweetContent);
+    let contentType = "";
+
+    if (tweet.video) {
+        const videoElement = getVideo(tweet.video);
+        container.appendChild(videoElement);
+        contentType += " + video";
+    } else if (tweet.images?.length) {
+        const imageContainer = generateImages(tweet.images);
+        container.appendChild(imageContainer);
+        contentType += " + images";
+    }
 
     const tweetType = document.createElement("div");
     tweetType.classList.add("tweet-type");
-    tweetType.innerText = tweet.type;
+    tweetType.innerText = `${tweet.type}${contentType}`;
 
     container.appendChild(tweetType);
 }

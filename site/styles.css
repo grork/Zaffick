@@ -59,3 +59,28 @@ button.refresh-button {
 .tweet-container:first-of-type {
     margin-top: 8px;
 }
+
+.tweet-images {
+    height: 250px;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 12px;
+    overflow-x: auto;
+}
+
+video {
+    width: 100%;
+}
+
+.tweet-images a {
+    display: block;
+    border-width: 0px;
+    text-decoration: none;
+}
+
+.tweet-images img {
+    border-radius: 8px;
+    height: 100%;
+}
