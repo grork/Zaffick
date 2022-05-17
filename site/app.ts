@@ -1,28 +1,37 @@
-import type * as api from "../typings/api";
+import * as api from "../typings/api";
 
 const BASE_FUNCTION_PATH = ".netlify/functions/latest";
 
-function generateTweet(tweet: api.TweetResponse): HTMLElement {
-    const container = document.createElement("div");
-    container.classList.add("tweet-container");
-
+function generateTweet(tweet: api.TweetResponse, container: HTMLElement): void {
     const tweetContent = document.createElement("div");
     tweetContent.classList.add("tweet-content");
     tweetContent.innerHTML = tweet.content;
     container.appendChild(tweetContent);
-
-    if (tweet.type === "quote") {
-        const childTweet = generateTweet(tweet.quotedTweet);
-        container.appendChild(childTweet);
-    }
 
     const tweetType = document.createElement("div");
     tweetType.classList.add("tweet-type");
     tweetType.innerText = tweet.type;
 
     container.appendChild(tweetType);
+}
 
-    return container;
+function generateQuoteTweet(tweet: api.QuoteTweetResponse, container: HTMLElement): void {
+    const tweetContent = document.createElement("div");
+    tweetContent.classList.add("tweet-content");
+    tweetContent.innerHTML = tweet.content;
+    container.appendChild(tweetContent);
+
+    const quotedTweet = document.createElement("div");
+    quotedTweet.classList.add("tweet-container");
+    generateTweet(tweet.quotedTweet, quotedTweet);
+
+    container.appendChild(quotedTweet);
+
+    const tweetType = document.createElement("div");
+    tweetType.classList.add("tweet-type");
+    tweetType.innerText = tweet.type;
+
+    container.appendChild(tweetType);
 }
 
 async function loadTopTweets() {
@@ -37,9 +46,21 @@ async function loadTopTweets() {
 
     const result: api.LatestResponse = await (await fetch(function_query)).json();
     for (let m of result.tweets) {
-        const tweet = generateTweet(m);
-
-        timeline.appendChild(tweet);
+        let container: HTMLElement = document.createElement("div");
+        container.classList.add("tweet-container");
+    
+        switch (m.type) {
+            case "quote":
+                generateQuoteTweet(m, container);
+                break;
+            
+            case "tweet":
+            case "reply":
+            case "retweet":
+                generateTweet(m, container);
+        }
+        
+        timeline.appendChild(container);
     }
 }
 

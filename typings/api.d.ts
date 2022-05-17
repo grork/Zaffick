@@ -11,7 +11,7 @@ export declare interface ReplyTweetResponse {
 export declare interface QuoteTweetResponse {
     type: "quote";
     content: string;
-    quotedTweet: NonQuoteTweets;
+    quotedTweet: TweetResponse;
 }
 
 export declare interface RetweetResponse {
@@ -19,9 +19,7 @@ export declare interface RetweetResponse {
     content: string;
 }
 
-export declare type NonQuoteTweets = StandardTweetResponse | RetweetResponse | ReplyTweetResponse;
-
-export declare type TweetResponse = NonQuoteTweets | QuoteTweetResponse;
+export declare type TweetResponse = StandardTweetResponse | RetweetResponse | ReplyTweetResponse | QuoteTweetResponse;
 
 export declare interface LatestResponse {
     tweets: TweetResponse[];

@@ -36,6 +36,23 @@ function getContentFromTweet(tweet: twypes.Tweet): string {
     return content;
 }
 
+function tweetToResponse(tweet: twypes.Tweet): Omit<api.TweetResponse, "type"> {
+    return {
+        content: getContentFromTweet(tweet)
+    };
+}
+
+function quoteTweetToResponse(tweet: twypes.Tweet): api.QuoteTweetResponse {
+    return {
+        type: "quote",
+        ...tweetToResponse(tweet),
+        quotedTweet: {
+            type: <Exclude<TweetType, "quote">>tweetTypeFromTweet(tweet.quoted_status),
+            ...tweetToResponse(tweet.quoted_status)
+        }
+    }
+}
+
 async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse> {
     const cannedResponseRequested = (event.queryStringParameters["canned"] == "true");
 
@@ -48,32 +65,22 @@ async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse
     }
 
     const body: api.LatestResponse = { tweets: [] };
+
     body.tweets = result.map((originalTweet): api.TweetResponse => {
         const tweetType = tweetTypeFromTweet(originalTweet);
+        const tweetContentSource = (tweetType !== TweetType.Retweet) ? originalTweet : originalTweet.retweeted_status;
         
         switch (tweetType) {
+            case "quote":
+                return quoteTweetToResponse(originalTweet);
+            
             case "tweet":
             case "reply":
-                return {
-                    type: tweetType,
-                    content: getContentFromTweet(originalTweet)
-                };
-            
-            case "quote":
-                return {
-                    type: tweetType,
-                    content: getContentFromTweet(originalTweet),
-                    quotedTweet: {
-                        type: <any>tweetTypeFromTweet(originalTweet.quoted_status),
-                        content: getContentFromTweet(originalTweet.quoted_status)
-                    }
-                };
-            
             case "retweet":
                 return {
-                    type: "retweet",
-                    content: getContentFromTweet(originalTweet.retweeted_status)
-                }
+                    type: tweetType,
+                    ...tweetToResponse(tweetContentSource)
+                };
         }
     });
 
