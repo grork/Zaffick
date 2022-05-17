@@ -25,7 +25,7 @@ const v2 = {
 
 const v1 = {
     async getTimeLineForUserByHandle(screen_name: string): Promise<twypesv1.Tweet[]> {
-        return getFromTwitterWithType(`https://api.twitter.com/1.1/statuses/user_timeline.json?trim_user=true&tweet_mode=extended&screen_name=${screen_name}`);
+        return getFromTwitterWithType(`https://api.twitter.com/1.1/statuses/user_timeline.json?tweet_mode=extended&screen_name=${screen_name}`);
     }
 };
 

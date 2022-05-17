@@ -7,6 +7,8 @@ declare interface BaseTweet {
     content: string;
     images?: string[];
     video?: VideoInfo;
+    posted: string;
+    author: string;
 }
 
 export declare interface StandardTweetResponse extends BaseTweet {
@@ -21,9 +23,8 @@ export declare interface RetweetResponse extends BaseTweet {
     type: "retweet";
 }
 
-export declare interface QuoteTweetResponse {
+export declare interface QuoteTweetResponse extends BaseTweet {
     type: "quote";
-    content: string;
     quotedTweet: NonQuoteTweetResponse;
 }
 

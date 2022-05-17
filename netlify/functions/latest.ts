@@ -71,7 +71,9 @@ function tweetToResponse(tweet: twypes.Tweet): Omit<api.NonQuoteTweetResponse, "
     return {
         content: getContentFromTweet(tweet),
         images: getImagesFromTweet(tweet),
-        video: getVideoFromTweet(tweet)
+        video: getVideoFromTweet(tweet),
+        posted: tweet.created_at,
+        author: tweet.user.screen_name
     };
 }
 

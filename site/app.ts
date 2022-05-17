@@ -2,6 +2,15 @@ import * as api from "../typings/api";
 
 const BASE_FUNCTION_PATH = ".netlify/functions/latest";
 
+function getPostedTimeAsString(time: Date): string {
+    const formatter = new Intl.DateTimeFormat([], {
+        dateStyle: "medium",
+        timeStyle: "short"
+    });
+
+    return formatter.format(time);
+}
+
 function generateImages(imageUrls: string[]): HTMLElement {
     const container = document.createElement("div");
     container.classList.add("tweet-images");
@@ -33,12 +42,16 @@ function getVideo(videoInfo: api.VideoInfo): HTMLVideoElement {
 }
 
 function generateTweet(tweet: api.NonQuoteTweetResponse, container: HTMLElement): void {
+    const authorElement = document.createElement("div");
+    authorElement.innerText = tweet.author;
+    container.appendChild(authorElement);
+
     const tweetContent = document.createElement("div");
     tweetContent.classList.add("tweet-content");
     tweetContent.innerHTML = tweet.content;
     container.appendChild(tweetContent);
-    let contentType = "";
 
+    let contentType = "";
     if (tweet.video) {
         const videoElement = getVideo(tweet.video);
         container.appendChild(videoElement);
@@ -52,11 +65,18 @@ function generateTweet(tweet: api.NonQuoteTweetResponse, container: HTMLElement)
     const tweetType = document.createElement("div");
     tweetType.classList.add("tweet-type");
     tweetType.innerText = `${tweet.type}${contentType}`;
-
     container.appendChild(tweetType);
+
+    const postedAt = document.createElement("div");
+    postedAt.innerText = getPostedTimeAsString(new Date(tweet.posted));
+    container.appendChild(postedAt);
 }
 
 function generateQuoteTweet(tweet: api.QuoteTweetResponse, container: HTMLElement): void {
+    const authorElement = document.createElement("div");
+    authorElement.innerText = tweet.author;
+    container.appendChild(authorElement);
+
     const tweetContent = document.createElement("div");
     tweetContent.classList.add("tweet-content");
     tweetContent.innerHTML = tweet.content;
@@ -65,14 +85,16 @@ function generateQuoteTweet(tweet: api.QuoteTweetResponse, container: HTMLElemen
     const quotedTweet = document.createElement("div");
     quotedTweet.classList.add("tweet-container");
     generateTweet(tweet.quotedTweet, quotedTweet);
-
     container.appendChild(quotedTweet);
 
     const tweetType = document.createElement("div");
     tweetType.classList.add("tweet-type");
     tweetType.innerText = tweet.type;
-
     container.appendChild(tweetType);
+
+    const postedAt = document.createElement("div");
+    postedAt.innerText = getPostedTimeAsString(new Date(tweet.posted));
+    container.appendChild(postedAt);
 }
 
 async function loadTopTweets() {
