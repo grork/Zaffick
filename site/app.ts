@@ -51,7 +51,7 @@ function generateTweet(tweet: api.NonQuoteTweetResponse, container: HTMLElement)
     tweetContent.innerHTML = tweet.content;
     container.appendChild(tweetContent);
 
-    let contentType = "";
+    let contentType = (tweet.retweet_author ? " + retweet" : "");
     if (tweet.video) {
         const videoElement = getVideo(tweet.video);
         container.appendChild(videoElement);
@@ -89,7 +89,7 @@ function generateQuoteTweet(tweet: api.QuoteTweetResponse, container: HTMLElemen
 
     const tweetType = document.createElement("div");
     tweetType.classList.add("tweet-type");
-    tweetType.innerText = tweet.type;
+    tweetType.innerText = `${tweet.type}${(tweet.retweet_author ? " + retweet" : "")}`;
     container.appendChild(tweetType);
 
     const postedAt = document.createElement("div");
@@ -119,7 +119,6 @@ async function loadTopTweets() {
             
             case "tweet":
             case "reply":
-            case "retweet":
                 generateTweet(m, container);
         }
         

@@ -1,6 +1,6 @@
 import * as nfunc from "@netlify/functions";
 import { v1 } from "../../tweets/timeline";
-import type * as twypes from "../../tweets/twypes-v1";
+import * as twypes from "../../tweets/twypes-v1";
 import type * as api from "../../typings/api";
 import stitched from "../../sample_data/stitched";
 import * as tt from "twitter-text";
@@ -8,17 +8,12 @@ import * as tt from "twitter-text";
 export enum TweetType {
     Tweet = "tweet",
     Reply = "reply",
-    Retweet = "retweet",
     Quote = "quote"
 }
 
 function tweetTypeFromTweet(tweet: twypes.Tweet): TweetType {
-    if (tweet.is_quote_status && tweet.quoted_status) {
+    if (tweet.is_quote_status) {
         return TweetType.Quote;
-    }
-
-    if (tweet.retweeted_status) {
-        return TweetType.Retweet;
     }
 
     if (tweet.in_reply_to_status_id_str) {
@@ -26,6 +21,18 @@ function tweetTypeFromTweet(tweet: twypes.Tweet): TweetType {
     }
 
     return TweetType.Tweet;
+}
+
+function isRetweet(tweet: twypes.Tweet): boolean {
+    return !!tweet.retweeted_status;
+}
+
+function getRetweetAuthor(tweet: twypes.Tweet): string {
+    if (tweet.retweeted_status) {
+        return tweet.user.screen_name;
+    }
+
+    return undefined;
 }
 
 function getContentFromTweet(tweet: twypes.Tweet): string {
@@ -103,17 +110,20 @@ async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse
 
     body.tweets = result.map((originalTweet): api.TweetResponse => {
         const tweetType = tweetTypeFromTweet(originalTweet);
-        const tweetContentSource = (tweetType !== TweetType.Retweet) ? originalTweet : originalTweet.retweeted_status;
+        const tweetContentSource = (isRetweet(originalTweet) ? originalTweet.retweeted_status : originalTweet);
         
         switch (tweetType) {
             case "quote":
-                return quoteTweetToResponse(originalTweet);
+                return {
+                    retweet_author: getRetweetAuthor(originalTweet),
+                    ...quoteTweetToResponse(tweetContentSource),
+                }
             
             case "tweet":
             case "reply":
-            case "retweet":
                 return {
                     type: tweetType,
+                    retweet_author: getRetweetAuthor(originalTweet),
                     ...tweetToResponse(tweetContentSource)
                 };
         }
