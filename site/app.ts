@@ -1,7 +1,24 @@
 import type * as api from "../typings/api";
-import * as utilities from "./utilities.js";
 
 const BASE_FUNCTION_PATH = ".netlify/functions/latest";
+
+function cloneIntoWithParts<T>(templateName: string, target: Element): T {
+    const template = document.querySelector<HTMLTemplateElement>(`[data-template='${templateName}']`)!;
+    const content = document.importNode(template.content, true);
+
+    const parts = Array.from(content.querySelectorAll("[data-part]")).reduce<any>(
+        (localParts: any, el: Element) => {
+            const partName = el.getAttribute("data-part")!;
+            el.removeAttribute("data-part");
+            localParts[partName] = el;
+            return localParts;
+        },
+        {});
+    
+    target.appendChild(content);
+
+    return parts;
+}
 
 function getPostedTimeAsString(time: Date): string {
     const formatter = new Intl.DateTimeFormat([], {
@@ -43,8 +60,14 @@ function getVideo(videoInfo: api.VideoInfo): HTMLVideoElement {
 }
 
 function generateTweet(tweet: api.TweetResponse, container: Element): void {
-    const template = <HTMLTemplateElement>document.querySelector("[data-template='tweet']");
-    const parts = utilities.cloneIntoWithParts(template, container, ["author", "content", "media", "type", "postedAt", "quoteContainer"]);
+    const parts: {
+        author: HTMLElement
+        content: HTMLElement
+        media: HTMLElement
+        type: HTMLElement
+        postedAt: HTMLElement
+        quoteContainer: HTMLElement
+    } = cloneIntoWithParts("tweet", container);
 
     parts.author.textContent = tweet.author;
     parts.content.innerHTML = tweet.content;
@@ -58,6 +81,8 @@ function generateTweet(tweet: api.TweetResponse, container: Element): void {
         const imageContainer = generateImages(tweet.images);
         parts.media.replaceWith(imageContainer);
         contentType += " + images";
+    } else {
+        parts.media.parentElement?.removeChild(parts.media);
     }
 
     if (tweet.type === "quote") {
