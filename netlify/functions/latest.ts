@@ -121,6 +121,10 @@ async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse
 
     return {
         statusCode: 200,
+        headers: {
+            "content-type": "application/json; charset=utf-8",
+            "cache-control": "no-cache, no-store, max-age=0"
+        },
         body: JSON.stringify(body)
     };
 }
