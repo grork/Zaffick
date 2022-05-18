@@ -2,8 +2,13 @@ import type * as api from "../typings/api";
 
 const BASE_FUNCTION_PATH = ".netlify/functions/latest";
 
-function cloneIntoWithParts<T>(templateName: string, target: Element): T {
+function cloneIntoWithPartsFromName<T>(templateName: string, target: Element): T {
     const template = document.querySelector<HTMLTemplateElement>(`[data-template='${templateName}']`)!;
+    
+    return cloneIntoWithParts(template, target);
+}
+
+function cloneIntoWithParts<T>(template: HTMLTemplateElement, target: Element): T {
     const content = document.importNode(template.content, true);
 
     const parts = Array.from(content.querySelectorAll("[data-part]")).reduce<any>(
@@ -29,33 +34,27 @@ function getPostedTimeAsString(time: Date): string {
     return formatter.format(time);
 }
 
-function generateImages(imageUrls: string[]): HTMLElement {
-    const container = document.createElement("div");
-    container.classList.add("tweet-images");
+function generateImages(imageUrls: string[], container: HTMLElement): void {
+    const template = document.querySelector<HTMLTemplateElement>("[data-template='image']")!;
 
     for (const image of imageUrls) {
-        const link = document.createElement("a");
-        link.href = image;
-        link.target = "_blank";
+        const parts: {
+            link: HTMLAnchorElement,
+            image: HTMLImageElement
+        } = cloneIntoWithParts(template, container); 
 
-        const imageElement = document.createElement("img");
-        imageElement.src = image;
-        link.appendChild(imageElement)
-
-        container.appendChild(link);
+        parts.link.href = image;
+        parts.image.src = image;
     }
-
-    return container;
 }
 
 function getVideo(videoInfo: api.VideoInfo): HTMLVideoElement {
-    const videoElement = document.createElement("video");
-    videoElement.preload = "auto";
+    const template = document.querySelector<HTMLTemplateElement>("[data-template='video']")!;
+    const fragment = document.importNode(template.content, true);
+    const videoElement = <HTMLVideoElement>fragment.firstElementChild!
     videoElement.src = videoInfo.url;
-    videoElement.controls = true;
-    videoElement.loop = true;
     videoElement.poster = videoInfo.poster;
-
+    
     return videoElement;
 }
 
@@ -67,7 +66,7 @@ function generateTweet(tweet: api.TweetResponse, container: Element): void {
         type: HTMLElement
         postedAt: HTMLElement
         quoteContainer: HTMLElement
-    } = cloneIntoWithParts("tweet", container);
+    } = cloneIntoWithPartsFromName("tweet", container);
 
     parts.author.textContent = tweet.author;
     parts.content.innerHTML = tweet.content;
@@ -78,8 +77,7 @@ function generateTweet(tweet: api.TweetResponse, container: Element): void {
         parts.media.replaceWith(videoElement);
         contentType += " + video";
     } else if (tweet.images?.length) {
-        const imageContainer = generateImages(tweet.images);
-        parts.media.replaceWith(imageContainer);
+        generateImages(tweet.images, parts.media);
         contentType += " + images";
     } else {
         parts.media.parentElement?.removeChild(parts.media);

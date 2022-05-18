@@ -24,10 +24,24 @@
 
         <div class="tweet-container" data-part="quoteContainer"></div>
 
-        <div class="tweet-media" data-part="media"></div>
+        <div class="tweet-images" data-part="media"></div>
 
         <div class="tweet-type" data-part="type"></div>
         <div class="tweet-posttime" data-part="postedAt"></div>
+    </template>
+
+    <template data-template="video">
+        <video class="tweet-video"
+               preload="auto"
+               controls
+               loop></video>
+    </template>
+
+    <template data-template="image">
+        <a data-part="link"
+           target="_blank">
+           <img data-part="image">
+        </a>
     </template>
 
     <div class="page-container">
