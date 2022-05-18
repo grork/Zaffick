@@ -1,4 +1,5 @@
-import * as api from "../typings/api";
+import type * as api from "../typings/api";
+import * as utilities from "./utilities.js";
 
 const BASE_FUNCTION_PATH = ".netlify/functions/latest";
 
@@ -41,60 +42,32 @@ function getVideo(videoInfo: api.VideoInfo): HTMLVideoElement {
     return videoElement;
 }
 
-function generateTweet(tweet: api.NonQuoteTweetResponse, container: HTMLElement): void {
-    const authorElement = document.createElement("div");
-    authorElement.innerText = tweet.author;
-    container.appendChild(authorElement);
+function generateTweet(tweet: api.TweetResponse, container: Element): void {
+    const template = <HTMLTemplateElement>document.querySelector("[data-template='tweet']");
+    const parts = utilities.cloneIntoWithParts(template, container, ["author", "content", "media", "type", "postedAt", "quoteContainer"]);
 
-    const tweetContent = document.createElement("div");
-    tweetContent.classList.add("tweet-content");
-    tweetContent.innerHTML = tweet.content;
-    container.appendChild(tweetContent);
-
+    parts.author.textContent = tweet.author;
+    parts.content.innerHTML = tweet.content;
+    
     let contentType = (tweet.retweet_author ? " + retweet" : "");
     if (tweet.video) {
         const videoElement = getVideo(tweet.video);
-        container.appendChild(videoElement);
+        parts.media.replaceWith(videoElement);
         contentType += " + video";
     } else if (tweet.images?.length) {
         const imageContainer = generateImages(tweet.images);
-        container.appendChild(imageContainer);
+        parts.media.replaceWith(imageContainer);
         contentType += " + images";
     }
 
-    const tweetType = document.createElement("div");
-    tweetType.classList.add("tweet-type");
-    tweetType.innerText = `${tweet.type}${contentType}`;
-    container.appendChild(tweetType);
+    if (tweet.type === "quote") {
+        generateTweet(tweet.quotedTweet, parts.quoteContainer);
+    } else {
+        parts.quoteContainer.parentElement?.removeChild(parts.quoteContainer);   
+    }
 
-    const postedAt = document.createElement("div");
-    postedAt.innerText = getPostedTimeAsString(new Date(tweet.posted));
-    container.appendChild(postedAt);
-}
-
-function generateQuoteTweet(tweet: api.QuoteTweetResponse, container: HTMLElement): void {
-    const authorElement = document.createElement("div");
-    authorElement.innerText = tweet.author;
-    container.appendChild(authorElement);
-
-    const tweetContent = document.createElement("div");
-    tweetContent.classList.add("tweet-content");
-    tweetContent.innerHTML = tweet.content;
-    container.appendChild(tweetContent);
-
-    const quotedTweet = document.createElement("div");
-    quotedTweet.classList.add("tweet-container");
-    generateTweet(tweet.quotedTweet, quotedTweet);
-    container.appendChild(quotedTweet);
-
-    const tweetType = document.createElement("div");
-    tweetType.classList.add("tweet-type");
-    tweetType.innerText = `${tweet.type}${(tweet.retweet_author ? " + retweet" : "")}`;
-    container.appendChild(tweetType);
-
-    const postedAt = document.createElement("div");
-    postedAt.innerText = getPostedTimeAsString(new Date(tweet.posted));
-    container.appendChild(postedAt);
+    parts.type.textContent = `${tweet.type}${contentType}`;
+    parts.postedAt.textContent = getPostedTimeAsString(new Date(tweet.posted));
 }
 
 async function loadTopTweets() {
@@ -113,10 +86,7 @@ async function loadTopTweets() {
         container.classList.add("tweet-container");
     
         switch (m.type) {
-            case "quote":
-                generateQuoteTweet(m, container);
-                break;
-            
+            case "quote":          
             case "tweet":
             case "reply":
                 generateTweet(m, container);
