@@ -34,6 +34,37 @@ function getPostedTimeAsString(time: Date): string {
     return formatter.format(time);
 }
 
+function getTweetType(tweet: api.TweetResponse): string {
+    let tweetTypes: string[] = [];
+
+    if (tweet.retweet_author) {
+        tweetTypes.push("retweet");
+    }
+
+    if (tweet.quotedTweet) {
+        tweetTypes.push("quote");
+    }
+
+    if (tweet.replyingTo) {
+        tweetTypes.push("reply");
+    }
+
+    if (!tweetTypes.length) {
+        // Must just be a tweet
+        tweetTypes.push("tweet");
+    }
+
+    if (tweet.images?.length) {
+        tweetTypes.push("images");
+    }
+
+    if (tweet.video) {
+        tweetTypes.push("video");
+    }
+
+    return tweetTypes.join(" + ");;
+}
+
 function generateImages(imageUrls: string[], container: HTMLElement): void {
     const template = document.querySelector<HTMLTemplateElement>("[data-template='image']")!;
 
@@ -71,25 +102,22 @@ function generateTweet(tweet: api.TweetResponse, container: Element): void {
     parts.author.textContent = tweet.author;
     parts.content.innerHTML = tweet.content;
     
-    let contentType = (tweet.retweet_author ? " + retweet" : "");
     if (tweet.video) {
         const videoElement = getVideo(tweet.video);
         parts.media.replaceWith(videoElement);
-        contentType += " + video";
     } else if (tweet.images?.length) {
         generateImages(tweet.images, parts.media);
-        contentType += " + images";
     } else {
         parts.media.parentElement?.removeChild(parts.media);
     }
 
-    if (tweet.type === "quote") {
+    if (tweet.quotedTweet) {
         generateTweet(tweet.quotedTweet, parts.quoteContainer);
     } else {
         parts.quoteContainer.parentElement?.removeChild(parts.quoteContainer);   
     }
 
-    parts.type.textContent = `${tweet.type}${contentType}`;
+    parts.type.textContent = getTweetType(tweet);
     parts.postedAt.textContent = getPostedTimeAsString(new Date(tweet.posted));
 }
 
@@ -108,12 +136,7 @@ async function loadTopTweets() {
         let container: HTMLElement = document.createElement("div");
         container.classList.add("tweet-container");
     
-        switch (m.type) {
-            case "quote":          
-            case "tweet":
-            case "reply":
-                generateTweet(m, container);
-        }
+        generateTweet(m, container);
         
         timeline.appendChild(container);
     }

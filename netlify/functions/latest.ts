@@ -5,26 +5,12 @@ import type * as api from "../../typings/api";
 import stitched from "../../sample_data/stitched";
 import * as tt from "twitter-text";
 
-export enum TweetType {
-    Tweet = "tweet",
-    Reply = "reply",
-    Quote = "quote"
-}
-
-function tweetTypeFromTweet(tweet: twypes.Tweet): TweetType {
-    if (tweet.is_quote_status) {
-        return TweetType.Quote;
-    }
-
-    if (tweet.in_reply_to_status_id_str) {
-        return TweetType.Reply;
-    }
-
-    return TweetType.Tweet;
-}
-
 function isRetweet(tweet: twypes.Tweet): boolean {
     return !!tweet.retweeted_status;
+}
+
+function doesQuoteTweet(tweet: twypes.Tweet): boolean {
+    return !!tweet.quoted_status;
 }
 
 function getRetweetAuthor(tweet: twypes.Tweet): string {
@@ -74,25 +60,15 @@ function getVideoFromTweet(tweet: twypes.Tweet): api.VideoInfo {
     }
 }
 
-function tweetToResponse(tweet: twypes.Tweet): Omit<api.NonQuoteTweetResponse, "type"> {
+function tweetToResponse(tweet: twypes.Tweet): Omit<api.TweetResponse, "type"> {
     return {
         content: getContentFromTweet(tweet),
         images: getImagesFromTweet(tweet),
         video: getVideoFromTweet(tweet),
         posted: tweet.created_at,
-        author: tweet.user.screen_name
+        author: tweet.user.screen_name,
+        replyingTo: tweet.in_reply_to_status_id_str || undefined
     };
-}
-
-function quoteTweetToResponse(tweet: twypes.Tweet): api.QuoteTweetResponse {
-    return {
-        type: "quote",
-        ...tweetToResponse(tweet),
-        quotedTweet: {
-            type: <Exclude<TweetType, "quote">>tweetTypeFromTweet(tweet.quoted_status),
-            ...tweetToResponse(tweet.quoted_status)
-        }
-    }
 }
 
 async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse> {
@@ -109,24 +85,15 @@ async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse
     const body: api.LatestResponse = { tweets: [] };
 
     body.tweets = result.map((originalTweet): api.TweetResponse => {
-        const tweetType = tweetTypeFromTweet(originalTweet);
         const tweetContentSource = (isRetweet(originalTweet) ? originalTweet.retweeted_status : originalTweet);
-        
-        switch (tweetType) {
-            case "quote":
-                return {
-                    retweet_author: getRetweetAuthor(originalTweet),
-                    ...quoteTweetToResponse(tweetContentSource),
-                }
-            
-            case "tweet":
-            case "reply":
-                return {
-                    type: tweetType,
-                    retweet_author: getRetweetAuthor(originalTweet),
-                    ...tweetToResponse(tweetContentSource)
-                };
+
+        const tweetResponse = tweetToResponse(tweetContentSource);
+        tweetResponse.retweet_author = getRetweetAuthor(originalTweet);
+        if (doesQuoteTweet(tweetContentSource)) {
+            tweetResponse.quotedTweet = tweetToResponse(tweetContentSource.quoted_status);
         }
+
+        return tweetResponse;
     });
 
     return {
