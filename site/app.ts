@@ -4,7 +4,7 @@ const BASE_FUNCTION_PATH = ".netlify/functions/latest";
 
 function cloneIntoWithPartsFromName<T>(templateName: string, target: Element): T {
     const template = document.querySelector<HTMLTemplateElement>(`[data-template='${templateName}']`)!;
-    
+
     return cloneIntoWithParts(template, target);
 }
 
@@ -19,22 +19,44 @@ function cloneIntoWithParts<T>(template: HTMLTemplateElement, target: Element): 
             return localParts;
         },
         {});
-    
+
     target.appendChild(content);
 
     return parts;
 }
 
-function getPostedTimeAsString(time: Date): string {
-    const formatter = new Intl.DateTimeFormat([], {
-        dateStyle: "medium",
-        timeStyle: "short"
-    });
+//#region Borrowed from: https://blog.webdevsimplified.com/2020-07/relative-time-format/
+const formatter = new Intl.RelativeTimeFormat(undefined, {
+    numeric: 'auto'
+})
 
-    return formatter.format(time);
+const DIVISIONS: { amount: number;  name: Intl.RelativeTimeFormatUnit}[] = [
+    { amount: 60, name: 'seconds' },
+    { amount: 60, name: 'minutes' },
+    { amount: 24, name: 'hours' },
+    { amount: 7, name: 'days' },
+    { amount: 4.34524, name: 'weeks' },
+    { amount: 12, name: 'months' },
+    { amount: Number.POSITIVE_INFINITY, name: 'years' }
+]
+
+function formatTimeAgo(date: Date): string {
+    let duration = (date.getTime() - Date.now()) / 1000;
+
+    for (let i = 0; i <= DIVISIONS.length; i++) {
+        const division = DIVISIONS[i];
+        if (Math.abs(duration) < division.amount) {
+            return formatter.format(Math.round(duration), division.name);
+        }
+        duration /= division.amount;
+    }
+
+    return "unknown";
 }
 
-function getTweetType(tweet: api.TweetResponse): string {
+//#endregion
+
+function getTweetTraits(tweet: api.TweetResponse): string {
     let tweetTypes: string[] = [];
 
     if (tweet.retweet_author) {
@@ -72,7 +94,7 @@ function generateImages(imageUrls: string[], container: HTMLElement): void {
         const parts: {
             link: HTMLAnchorElement,
             image: HTMLImageElement
-        } = cloneIntoWithParts(template, container); 
+        } = cloneIntoWithParts(template, container);
 
         parts.link.href = image;
         parts.image.src = image;
@@ -85,7 +107,7 @@ function getVideo(videoInfo: api.VideoInfo): HTMLVideoElement {
     const videoElement = <HTMLVideoElement>fragment.firstElementChild!
     videoElement.src = videoInfo.url;
     videoElement.poster = videoInfo.poster;
-    
+
     return videoElement;
 }
 
@@ -101,7 +123,7 @@ function generateTweet(tweet: api.TweetResponse, container: Element): void {
 
     parts.author.textContent = tweet.author;
     parts.content.innerHTML = tweet.content;
-    
+
     if (tweet.video) {
         const videoElement = getVideo(tweet.video);
         parts.media.replaceWith(videoElement);
@@ -114,11 +136,11 @@ function generateTweet(tweet: api.TweetResponse, container: Element): void {
     if (tweet.quotedTweet) {
         generateTweet(tweet.quotedTweet, parts.quoteContainer);
     } else {
-        parts.quoteContainer.parentElement?.removeChild(parts.quoteContainer);   
+        parts.quoteContainer.parentElement?.removeChild(parts.quoteContainer);
     }
 
-    parts.type.textContent = getTweetType(tweet);
-    parts.postedAt.textContent = getPostedTimeAsString(new Date(tweet.posted));
+    parts.type.textContent = getTweetTraits(tweet);
+    parts.postedAt.textContent = formatTimeAgo(new Date(tweet.posted));
 }
 
 async function loadTopTweets() {
@@ -135,9 +157,9 @@ async function loadTopTweets() {
     for (let m of result.tweets) {
         let container: HTMLElement = document.createElement("div");
         container.classList.add("tweet-container");
-    
+
         generateTweet(m, container);
-        
+
         timeline.appendChild(container);
     }
 }
