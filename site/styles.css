@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 :root {
     color-scheme: light dark;
@@ -17,21 +19,16 @@ html {
     overflow-x: hidden;
 }
 
-@media only screen and (max-width: 768px) {
-    .page-container {
-        max-width: 95vw;
-    }
-}
-
 h1.page-header {
-    font-size: 10em;
-    letter-spacing: -0.1em;
+    font-family: 'Rubik Glitch', cursive;
+    font-weight: normal;
+    font-size: 10.5vw;
     margin: 0px;
 }
 
 .tweet-container {
     box-sizing: border-box;
-    font-family: monospace;
+    font-family: 'VT323', monospace;
     font-size: 1.2em;
     margin: 12px 0px;
     padding: 4px 0px;
@@ -83,4 +80,14 @@ video {
 .tweet-images img {
     border-radius: 8px;
     height: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+    .page-container {
+        max-width: 95vw;
+    }
+
+    h1.page-header {
+        font-size: 18vw;
+    }
 }
