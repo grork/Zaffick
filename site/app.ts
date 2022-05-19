@@ -1,6 +1,7 @@
 import type * as api from "../typings/api";
 
 const BASE_FUNCTION_PATH = ".netlify/functions/latest";
+const BACKGROUND_REFRESH_TIMEOUT_SECONDS = 120;
 
 function cloneIntoWithPartsFromName<T>(templateName: string, target: Element): T {
     const template = document.querySelector<HTMLTemplateElement>(`[data-template='${templateName}']`)!;
@@ -168,5 +169,26 @@ document.addEventListener("DOMContentLoaded", function () {
     const doit = document.querySelector("[data-id='doit']")!;
 
     doit.addEventListener("click", loadTopTweets);
+    loadTopTweets();
+});
+
+let backgroundedTimeMs = -1;
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+        backgroundedTimeMs = Date.now();
+        return;
+    }
+
+    if (backgroundedTimeMs === -1) {
+        return;
+    }
+
+    const backgroundedDurationSeconds = (Date.now() - backgroundedTimeMs) / 1000;
+    backgroundedTimeMs = -1;
+
+    if (backgroundedDurationSeconds < BACKGROUND_REFRESH_TIMEOUT_SECONDS) {
+        return;
+    }
+
     loadTopTweets();
 });
