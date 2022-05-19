@@ -135,7 +135,8 @@ function generateTweet(tweet: api.TweetResponse, container: Element): void {
         media: HTMLElement
         type: HTMLElement
         postedAt: HTMLAnchorElement
-        quoteContainer: HTMLElement
+        quoteContainer: HTMLElement,
+        reply: HTMLAnchorElement
     } = cloneIntoWithPartsFromName("tweet", container);
 
     parts.author.textContent = tweet.author;
@@ -160,6 +161,12 @@ function generateTweet(tweet: api.TweetResponse, container: Element): void {
     parts.type.textContent = getTweetTypeSymbol(tweet);
     parts.postedAt.textContent = formatTimeAgo(new Date(tweet.posted));
     parts.postedAt.href = tweet.url;
+
+    if (tweet.replyingTo) {
+        parts.reply.href = tweet.replyingTo;
+    } else {
+        parts.reply.parentElement?.removeChild(parts.reply);
+    }
 }
 
 async function loadTopTweets() {

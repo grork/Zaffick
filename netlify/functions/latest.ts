@@ -74,7 +74,7 @@ function tweetToResponse(tweet: twypes.Tweet): Omit<api.TweetResponse, "type"> {
         posted: tweet.created_at,
         author: tweet.user.screen_name,
         author_url: `https://twitter.com/${tweet.user.screen_name}`,
-        replyingTo: tweet.in_reply_to_status_id_str || undefined
+        replyingTo: tweet.in_reply_to_status_id_str ? `https://twitter.com/${tweet.in_reply_to_screen_name}/status/${tweet.in_reply_to_status_id_str}`: undefined
     };
 }
 
@@ -102,6 +102,10 @@ async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse
         tweetResponse.retweet_author = getRetweetAuthor(originalTweet);
         if (doesQuoteTweet(tweetContentSource)) {
             tweetResponse.quotedTweet = tweetToResponse(tweetContentSource.quoted_status);
+        }
+
+        if (tweetResponse.replyingTo) {
+            // Get 
         }
 
         items.push(tweetResponse);
