@@ -7,7 +7,7 @@
     "build": "tsc -p site",
     "clean": "rimraf output",
     "compile": "tsc -p site",
-    "copy-dependencies": "copyfiles -u 1 \"site/**/*.html\" output && copyfiles -u 1 \"site/**/*.css\" output",
+    "copy-dependencies": "copyfiles -u 1 \"site/**/*.html\" output && copyfiles -u 1 \"site/**/*.css\" output && copyfiles -u 1 \"site/**/*.svg\" output && copyfiles -u 1 \"site/**/*.png\" output",
     "postbuild": "npm run copy-dependencies",
     "serve": "netlify dev",
     "serve-static": "browser-sync start --server output --watch --no-ui --listen localhost --no-online --no-open --no-ghost-mode --reload-debounce 250",
@@ -28,7 +28,7 @@
         "output",
         "*.ts"
       ],
-      "extensions": "js,css,html"
+      "extensions": "js,css,html,svg,png"
     },
     "compile": {
       "patterns": [
