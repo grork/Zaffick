@@ -4,11 +4,13 @@ export declare interface VideoInfo {
 }
 
 declare interface TweetResponse {
+    url: string;
     content: string;
     images?: string[];
     video?: VideoInfo;
     posted: string;
     author: string;
+    author_url: string;
     retweet_author?: string;
     quotedTweet?: TweetResponse;
     replyingTo?: string;

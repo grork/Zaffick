@@ -68,10 +68,12 @@ function getVideoFromTweet(tweet: twypes.Tweet): api.VideoInfo {
 function tweetToResponse(tweet: twypes.Tweet): Omit<api.TweetResponse, "type"> {
     return {
         content: getContentFromTweet(tweet),
+        url: `https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`,
         images: getImagesFromTweet(tweet),
         video: getVideoFromTweet(tweet),
         posted: tweet.created_at,
         author: tweet.user.screen_name,
+        author_url: `https://twitter.com/${tweet.user.screen_name}`,
         replyingTo: tweet.in_reply_to_status_id_str || undefined
     };
 }

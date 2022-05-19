@@ -106,9 +106,14 @@ video {
 }
 
 .tweet-author {
+    display: block;
     font-family: sans-serif;
     font-size: 0.9em;
     color: var(--author-text-color);
+}
+
+.tweet-posttime {
+    display: block;
 }
 
 .timeline-container {

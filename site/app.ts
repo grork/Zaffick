@@ -130,15 +130,16 @@ function getVideo(videoInfo: api.VideoInfo): HTMLVideoElement {
 
 function generateTweet(tweet: api.TweetResponse, container: Element): void {
     const parts: {
-        author: HTMLElement
+        author: HTMLAnchorElement
         content: HTMLElement
         media: HTMLElement
         type: HTMLElement
-        postedAt: HTMLElement
+        postedAt: HTMLAnchorElement
         quoteContainer: HTMLElement
     } = cloneIntoWithPartsFromName("tweet", container);
 
     parts.author.textContent = tweet.author;
+    parts.author.href = tweet.author_url;
     parts.content.innerHTML = tweet.content;
 
     if (tweet.video) {
@@ -158,6 +159,7 @@ function generateTweet(tweet: api.TweetResponse, container: Element): void {
 
     parts.type.textContent = getTweetTypeSymbol(tweet);
     parts.postedAt.textContent = formatTimeAgo(new Date(tweet.posted));
+    parts.postedAt.href = tweet.url;
 }
 
 async function loadTopTweets() {
