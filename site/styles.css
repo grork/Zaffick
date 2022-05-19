@@ -58,7 +58,6 @@ button.refresh-button {
 }
 
 .tweet-images {
-    height: 250px;
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
@@ -72,6 +71,9 @@ video {
 }
 
 .tweet-images a {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 24vw;
     display: block;
     border-width: 0px;
     text-decoration: none;
@@ -79,7 +81,7 @@ video {
 
 .tweet-images img {
     border-radius: 8px;
-    height: 100%;
+    width: 100%;
 }
 
 @media only screen and (max-width: 768px) {
