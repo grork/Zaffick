@@ -88,6 +88,22 @@ function getTweetTraits(tweet: api.TweetResponse): string {
     return tweetTypes.join(" + ");;
 }
 
+function getTweetTypeSymbol(tweet: api.TweetResponse): string {
+    if (tweet.retweet_author) {
+        return "repeat";
+    }
+
+    if (tweet.quotedTweet) {
+        return "format_quote"
+    }
+
+    if (tweet.replyingTo) {
+        return "reply";
+    }
+
+    return "mail";
+}
+
 function generateImages(imageUrls: string[], container: HTMLElement): void {
     const template = document.querySelector<HTMLTemplateElement>("[data-template='image']")!;
 
@@ -140,7 +156,7 @@ function generateTweet(tweet: api.TweetResponse, container: Element): void {
         parts.quoteContainer.parentElement?.removeChild(parts.quoteContainer);
     }
 
-    parts.type.textContent = getTweetTraits(tweet);
+    parts.type.textContent = getTweetTypeSymbol(tweet);
     parts.postedAt.textContent = formatTimeAgo(new Date(tweet.posted));
 }
 

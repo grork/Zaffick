@@ -1,15 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@300');
 
 :root {
     color-scheme: light dark;
+    --border-curve: 8px;
+    --tweet-border-colour: rgb(199, 199, 199);
+    --text-colour: rgb(49, 49, 49);
+    --heading-colour: black;
+    --nested-text-colour: rgb(119, 119, 119);
+    --author-text-color: rgb(110, 110, 110);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --tweet-border-colour: rgb(103, 103, 103);
+        --text-colour: rgb(200, 200, 200);
+        --heading-colour: white;
+        --nested-text-colour: rgb(172, 172, 172);
+        --author-text-color: rgb(165, 165, 165);
+    }
 }
 
 body,
 html {
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: var(--text-colour);
 }
 
 .page-container {
@@ -21,6 +39,7 @@ html {
 
 h1.page-header {
     font-family: 'Rubik Glitch', cursive;
+    color: var(--heading-colour);
     font-weight: normal;
     font-size: 10.5vw;
     margin: 0px;
@@ -29,19 +48,19 @@ h1.page-header {
 .tweet-container {
     box-sizing: border-box;
     font-family: 'VT323', monospace;
-    font-size: 1.2em;
-    margin: 12px 0px;
-    padding: 4px 0px;
+    font-size: 1.1em;
+    margin: 0px;
+    padding: var(--border-curve);
     border-style: solid;
-    border-width: 0px;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
+    border-color: var(--tweet-border-colour);
+    border-width: 1px;
+    border-radius: var(--border-curve);
 }
 
 .tweet-container > .tweet-container {
+    margin-top: 8px;
     font-size: 0.9em;
-    font-style: italic;
-    opacity: 0.5;
+    color: var(--nested-text-colour);
 }
 
 .tweet-type {
@@ -53,10 +72,6 @@ button.refresh-button {
     font-size: 1.5em;
 }
 
-.tweet-container:first-of-type {
-    margin-top: 8px;
-}
-
 .tweet-images {
     width: 100%;
     display: flex;
@@ -66,8 +81,14 @@ button.refresh-button {
     overflow-x: auto;
 }
 
+.tweet-images,
+video {
+    margin-top: 8px;
+}
+
 video {
     width: 100%;
+    border-radius: var(--border-curve);
 }
 
 .tweet-images a {
@@ -80,8 +101,37 @@ video {
 }
 
 .tweet-images img {
-    border-radius: 8px;
+    border-radius: var(--border-curve);
     width: 100%;
+}
+
+.tweet-author {
+    font-family: sans-serif;
+    font-size: 0.9em;
+    color: var(--author-text-color);
+}
+
+.timeline-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 12px;
+    margin-top: var(--border-curve);
+}
+
+.tweet-info-container {
+    font-size: 0.8em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 4px;
+}
+
+.material-symbols-outlined {
+    font-size: 1.2em;
+    transform: translateY(1px);
 }
 
 @media only screen and (max-width: 768px) {
