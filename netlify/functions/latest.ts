@@ -1,12 +1,17 @@
 import * as nfunc from "@netlify/functions";
 import { v1 } from "../../tweets/timeline";
 import * as twypes from "../../tweets/twypes-v1";
-import type * as api from "../../typings/api";
+import * as api from "../../typings/api";
 import stitched from "../../sample_data/stitched";
 import * as tt from "twitter-text";
 
 function isRetweet(tweet: twypes.Tweet): boolean {
     return !!tweet.retweeted_status;
+}
+
+function isReplyToSomeoneElse(tweet: twypes.Tweet): boolean {
+    return (tweet.in_reply_to_status_id_str &&
+        tweet.in_reply_to_screen_name !== tweet.user.screen_name);
 }
 
 function doesQuoteTweet(tweet: twypes.Tweet): boolean {
@@ -84,7 +89,11 @@ async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse
 
     const body: api.LatestResponse = { tweets: [] };
 
-    body.tweets = result.map((originalTweet): api.TweetResponse => {
+    body.tweets = result.reduce<api.TweetResponse[]>((items, originalTweet) => {
+        if (isReplyToSomeoneElse(originalTweet)) {
+            return items;
+        }
+
         const tweetContentSource = (isRetweet(originalTweet) ? originalTweet.retweeted_status : originalTweet);
 
         const tweetResponse = tweetToResponse(tweetContentSource);
@@ -93,8 +102,10 @@ async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse
             tweetResponse.quotedTweet = tweetToResponse(tweetContentSource.quoted_status);
         }
 
-        return tweetResponse;
-    });
+        items.push(tweetResponse);
+
+        return items;
+    }, []);
 
     return {
         statusCode: 200,

@@ -1,0 +1,106 @@
+{
+    "created_at": "Thu May 19 15:45:55 +0000 2022",
+    "id": 1527314616887279617,
+    "id_str": "1527314616887279617",
+    "full_text": "@brandonsblog Thank you for letting us know about this!",
+    "truncated": false,
+    "display_text_range": [
+        14,
+        55
+    ],
+    "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "user_mentions": [
+            {
+                "screen_name": "brandonsblog",
+                "name": "B",
+                "id": 270090222,
+                "id_str": "270090222",
+                "indices": [
+                    0,
+                    13
+                ]
+            }
+        ],
+        "urls": []
+    },
+    "source": "<a href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\">Twitter Web App<\/a>",
+    "in_reply_to_status_id": 1527309975759900672,
+    "in_reply_to_status_id_str": "1527309975759900672",
+    "in_reply_to_user_id": 270090222,
+    "in_reply_to_user_id_str": "270090222",
+    "in_reply_to_screen_name": "brandonsblog",
+    "user": {
+        "id": 17900666,
+        "id_str": "17900666",
+        "name": "WSDOT Traffic",
+        "screen_name": "wsdot_traffic",
+        "location": "Washington State",
+        "description": "Official WSDOT Twitter account for traffic in King & Snohomish counties, including Seattle. Monitored 6 a.m.-6 p.m. Mon-Fri. Call 911 to report road hazards.",
+        "url": "https:\/\/t.co\/xR53i9Qfst",
+        "entities": {
+            "url": {
+                "urls": [
+                    {
+                        "url": "https:\/\/t.co\/xR53i9Qfst",
+                        "expanded_url": "http:\/\/wsdot.wa.gov\/traffic\/seattle\/",
+                        "display_url": "wsdot.wa.gov\/traffic\/seattl\u2026",
+                        "indices": [
+                            0,
+                            23
+                        ]
+                    }
+                ]
+            },
+            "description": {
+                "urls": []
+            }
+        },
+        "protected": false,
+        "followers_count": 496582,
+        "friends_count": 331,
+        "listed_count": 2481,
+        "created_at": "Fri Dec 05 16:18:34 +0000 2008",
+        "favourites_count": 16131,
+        "utc_offset": null,
+        "time_zone": null,
+        "geo_enabled": false,
+        "verified": true,
+        "statuses_count": 296991,
+        "lang": null,
+        "contributors_enabled": false,
+        "is_translator": false,
+        "is_translation_enabled": false,
+        "profile_background_color": "FFFFFF",
+        "profile_background_image_url": "http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png",
+        "profile_background_image_url_https": "https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png",
+        "profile_background_tile": false,
+        "profile_image_url": "http:\/\/pbs.twimg.com\/profile_images\/1522198689934036992\/g1cfLaSz_normal.jpg",
+        "profile_image_url_https": "https:\/\/pbs.twimg.com\/profile_images\/1522198689934036992\/g1cfLaSz_normal.jpg",
+        "profile_banner_url": "https:\/\/pbs.twimg.com\/profile_banners\/17900666\/1577380009",
+        "profile_link_color": "0D7A58",
+        "profile_sidebar_border_color": "FFFFFF",
+        "profile_sidebar_fill_color": "DBF0E5",
+        "profile_text_color": "000000",
+        "profile_use_background_image": true,
+        "has_extended_profile": false,
+        "default_profile": false,
+        "default_profile_image": false,
+        "following": null,
+        "follow_request_sent": null,
+        "notifications": null,
+        "translator_type": "none",
+        "withheld_in_countries": []
+    },
+    "geo": null,
+    "coordinates": null,
+    "place": null,
+    "contributors": null,
+    "is_quote_status": false,
+    "retweet_count": 0,
+    "favorite_count": 0,
+    "favorited": false,
+    "retweeted": false,
+    "lang": "en"
+}
