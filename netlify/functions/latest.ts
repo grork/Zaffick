@@ -29,7 +29,7 @@ function getRetweetAuthor(tweet: twypes.Tweet): string {
 function getContentFromTweet(tweet: twypes.Tweet): string {
     const [start, end] = tweet.display_text_range;
     const displayText = tweet.full_text.substring(start, end);
-    const content = tt.autoLink(displayText, { urlEntities: tweet.entities.urls });
+    const content = tt.autoLink(displayText, { urlEntities: tweet.entities.urls, targetBlank: true });
 
     return content;
 }
