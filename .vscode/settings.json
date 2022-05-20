@@ -1,7 +1,7 @@
 {
     "typescript.tsc.autoDetect": "off",
     "npm.autoDetect": "off",
-    "codevoid.inner-loop-buddy.defaultUrl": "http://localhost:8888",
+    "codevoid.inner-loop-buddy.defaultUrl": "http://localhost:8888/?canned=true",
     "codevoid.inner-loop-buddy.autoOpenDelay": 4000,
     "codevoid.inner-loop-buddy.editorColumn": "Two",
     "codevoid.inner-loop-buddy.monitoredTasks": [
