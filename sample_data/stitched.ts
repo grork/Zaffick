@@ -9,6 +9,8 @@ import sample_multiple_pictures from "./multiple_pictures.json";
 import sample_animated_gif from "./animated_gif.json";
 import sample_video from "./video.json";
 import sample_retweet_quote_tweet from "./retweet_quote.json";
+import sample_thread_start from "./thread_start.json";
+import sample_thread_2 from "./thread_2.json";
 
 
 // Borrowed from https://stackoverflow.com/a/2450976
@@ -41,7 +43,9 @@ export default function stitched(): TweetV1[] {
         sample_picture,
         sample_multiple_pictures,
         sample_animated_gif,
-        sample_video
+        sample_video,
+        sample_thread_start,
+        sample_thread_2
     ];
 
     shuffle(tweets);

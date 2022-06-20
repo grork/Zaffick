@@ -1,0 +1,213 @@
+{
+    "created_at": "Sat Jun 18 00:17:44 +0000 2022",
+    "id": 1537952669020475393,
+    "id_str": "1537952669020475393",
+    "full_text": "Here's a visual of the disabled vehicle blocking the 2 center lanes on I-5 southbound just north of S 188th St in #Tukwila. Please drive through the area with caution. https:\/\/t.co\/27hIGIBsri",
+    "truncated": false,
+    "display_text_range": [
+        0,
+        167
+    ],
+    "entities": {
+        "hashtags": [
+            {
+                "text": "Tukwila",
+                "indices": [
+                    114,
+                    122
+                ]
+            }
+        ],
+        "symbols": [],
+        "user_mentions": [],
+        "urls": [],
+        "media": [
+            {
+                "id": 1537952171546644480,
+                "id_str": "1537952171546644480",
+                "indices": [
+                    168,
+                    191
+                ],
+                "media_url": "http:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1537952171546644480\/pu\/img\/Gl6dVivi-rTvBlM6.jpg",
+                "media_url_https": "https:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1537952171546644480\/pu\/img\/Gl6dVivi-rTvBlM6.jpg",
+                "url": "https:\/\/t.co\/27hIGIBsri",
+                "display_url": "pic.twitter.com\/27hIGIBsri",
+                "expanded_url": "https:\/\/twitter.com\/wsdot_traffic\/status\/1537952669020475393\/video\/1",
+                "type": "photo",
+                "sizes": {
+                    "thumb": {
+                        "w": 150,
+                        "h": 150,
+                        "resize": "crop"
+                    },
+                    "medium": {
+                        "w": 1200,
+                        "h": 675,
+                        "resize": "fit"
+                    },
+                    "small": {
+                        "w": 680,
+                        "h": 383,
+                        "resize": "fit"
+                    },
+                    "large": {
+                        "w": 1280,
+                        "h": 720,
+                        "resize": "fit"
+                    }
+                }
+            }
+        ]
+    },
+    "extended_entities": {
+        "media": [
+            {
+                "id": 1537952171546644480,
+                "id_str": "1537952171546644480",
+                "indices": [
+                    168,
+                    191
+                ],
+                "media_url": "http:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1537952171546644480\/pu\/img\/Gl6dVivi-rTvBlM6.jpg",
+                "media_url_https": "https:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1537952171546644480\/pu\/img\/Gl6dVivi-rTvBlM6.jpg",
+                "url": "https:\/\/t.co\/27hIGIBsri",
+                "display_url": "pic.twitter.com\/27hIGIBsri",
+                "expanded_url": "https:\/\/twitter.com\/wsdot_traffic\/status\/1537952669020475393\/video\/1",
+                "type": "video",
+                "sizes": {
+                    "thumb": {
+                        "w": 150,
+                        "h": 150,
+                        "resize": "crop"
+                    },
+                    "medium": {
+                        "w": 1200,
+                        "h": 675,
+                        "resize": "fit"
+                    },
+                    "small": {
+                        "w": 680,
+                        "h": 383,
+                        "resize": "fit"
+                    },
+                    "large": {
+                        "w": 1280,
+                        "h": 720,
+                        "resize": "fit"
+                    }
+                },
+                "video_info": {
+                    "aspect_ratio": [
+                        16,
+                        9
+                    ],
+                    "duration_millis": 9766,
+                    "variants": [
+                        {
+                            "bitrate": 256000,
+                            "content_type": "video\/mp4",
+                            "url": "https:\/\/video.twimg.com\/ext_tw_video\/1537952171546644480\/pu\/vid\/480x270\/iLuvZsvKG1JNzfUl.mp4?tag=12"
+                        },
+                        {
+                            "bitrate": 832000,
+                            "content_type": "video\/mp4",
+                            "url": "https:\/\/video.twimg.com\/ext_tw_video\/1537952171546644480\/pu\/vid\/640x360\/Jr26Q1-fZI6nEu1E.mp4?tag=12"
+                        },
+                        {
+                            "content_type": "application\/x-mpegURL",
+                            "url": "https:\/\/video.twimg.com\/ext_tw_video\/1537952171546644480\/pu\/pl\/bEMDpQDR8VkKhs97.m3u8?tag=12&container=fmp4"
+                        },
+                        {
+                            "bitrate": 2176000,
+                            "content_type": "video\/mp4",
+                            "url": "https:\/\/video.twimg.com\/ext_tw_video\/1537952171546644480\/pu\/vid\/1280x720\/bC-rb-xkxb4V20o0.mp4?tag=12"
+                        }
+                    ]
+                },
+                "additional_media_info": {
+                    "monetizable": false
+                }
+            }
+        ]
+    },
+    "source": "<a href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\">Twitter Web App<\/a>",
+    "in_reply_to_status_id": 1537950734565580801,
+    "in_reply_to_status_id_str": "1537950734565580801",
+    "in_reply_to_user_id": 17900666,
+    "in_reply_to_user_id_str": "17900666",
+    "in_reply_to_screen_name": "wsdot_traffic",
+    "user": {
+        "id": 17900666,
+        "id_str": "17900666",
+        "name": "WSDOT Traffic",
+        "screen_name": "wsdot_traffic",
+        "location": "Washington State",
+        "description": "Official WSDOT Twitter account for traffic in King & Snohomish counties, including Seattle. Monitored 6 a.m.-6 p.m. Mon-Fri. Call 911 to report road hazards.",
+        "url": "https:\/\/t.co\/xR53i9Qfst",
+        "entities": {
+            "url": {
+                "urls": [
+                    {
+                        "url": "https:\/\/t.co\/xR53i9Qfst",
+                        "expanded_url": "http:\/\/wsdot.wa.gov\/traffic\/seattle\/",
+                        "display_url": "wsdot.wa.gov\/traffic\/seattl\u2026",
+                        "indices": [
+                            0,
+                            23
+                        ]
+                    }
+                ]
+            },
+            "description": {
+                "urls": []
+            }
+        },
+        "protected": false,
+        "followers_count": 498092,
+        "friends_count": 338,
+        "listed_count": 2483,
+        "created_at": "Fri Dec 05 16:18:34 +0000 2008",
+        "favourites_count": 16322,
+        "utc_offset": null,
+        "time_zone": null,
+        "geo_enabled": false,
+        "verified": true,
+        "statuses_count": 298935,
+        "lang": null,
+        "contributors_enabled": false,
+        "is_translator": false,
+        "is_translation_enabled": false,
+        "profile_background_color": "FFFFFF",
+        "profile_background_image_url": "http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png",
+        "profile_background_image_url_https": "https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png",
+        "profile_background_tile": false,
+        "profile_image_url": "http:\/\/pbs.twimg.com\/profile_images\/1537783783776129024\/rMbsVbfK_normal.png",
+        "profile_image_url_https": "https:\/\/pbs.twimg.com\/profile_images\/1537783783776129024\/rMbsVbfK_normal.png",
+        "profile_banner_url": "https:\/\/pbs.twimg.com\/profile_banners\/17900666\/1577380009",
+        "profile_link_color": "0D7A58",
+        "profile_sidebar_border_color": "FFFFFF",
+        "profile_sidebar_fill_color": "DBF0E5",
+        "profile_text_color": "000000",
+        "profile_use_background_image": true,
+        "has_extended_profile": false,
+        "default_profile": false,
+        "default_profile_image": false,
+        "following": null,
+        "follow_request_sent": null,
+        "notifications": null,
+        "translator_type": "none",
+        "withheld_in_countries": []
+    },
+    "geo": null,
+    "coordinates": null,
+    "place": null,
+    "contributors": null,
+    "is_quote_status": false,
+    "retweet_count": 3,
+    "favorite_count": 3,
+    "favorited": false,
+    "retweeted": false,
+    "possibly_sensitive": false,
+    "lang": "en"
+}

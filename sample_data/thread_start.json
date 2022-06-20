@@ -1,12 +1,12 @@
 {
-    "created_at": "Sat Jun 18 00:52:49 +0000 2022",
-    "id": 1537961498101702656,
-    "id_str": "1537961498101702656",
-    "full_text": "Cleared, 5:52 PM: On I-5 southbound just north of S 188th St there is a disabled vehicle blocking the 2 center lanes.",
+    "created_at": "Sat Jun 18 00:10:03 +0000 2022",
+    "id": 1537950734565580801,
+    "id_str": "1537950734565580801",
+    "full_text": "On I-5 southbound just north of S 188th St there is a disabled vehicle blocking the 2 center lanes.",
     "truncated": false,
     "display_text_range": [
         0,
-        117
+        99
     ],
     "entities": {
         "hashtags": [],
@@ -14,12 +14,12 @@
         "user_mentions": [],
         "urls": []
     },
-    "source": "<a href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\">Twitter Web App<\/a>",
-    "in_reply_to_status_id": 1537952669020475393,
-    "in_reply_to_status_id_str": "1537952669020475393",
-    "in_reply_to_user_id": 17900666,
-    "in_reply_to_user_id_str": "17900666",
-    "in_reply_to_screen_name": "wsdot_traffic",
+    "source": "<a href=\"http:\/\/www.wsdot.wa.gov\/traffic\/seattle\/\" rel=\"nofollow\">WSDOT Traffic<\/a>",
+    "in_reply_to_status_id": null,
+    "in_reply_to_status_id_str": null,
+    "in_reply_to_user_id": null,
+    "in_reply_to_user_id_str": null,
+    "in_reply_to_screen_name": null,
     "user": {
         "id": 17900666,
         "id_str": "17900666",
