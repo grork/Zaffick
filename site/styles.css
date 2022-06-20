@@ -57,7 +57,12 @@ h1.page-header {
     border-radius: var(--border-curve);
 }
 
-.tweet-container > .tweet-container {
+.tweet-replies {
+    margin-bottom: 8px;
+}
+
+.tweet-container > .tweet-container,
+.tweet-replies > .tweet-container {
     margin-top: 8px;
     font-size: 0.9em;
     color: var(--nested-text-colour);

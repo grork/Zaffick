@@ -79,6 +79,97 @@ function tweetToResponse(tweet: twypes.Tweet): api.TweetResponse {
     };
 }
 
+function convertTweetIntoResponse(originalTweet: twypes.Tweet, seekingRepliesTo: Map<string, api.TweetResponse[]>): api.TweetResponse {
+    // Skip it if it's not a reply to us
+    if (isReplyToSomeoneElse(originalTweet)) {
+        return null;
+    }
+
+    // Determine the source of the content -- retweets get the actual thing
+    // being retweeted
+    const tweetContentSource = (isRetweet(originalTweet) ? originalTweet.retweeted_status : originalTweet);
+
+    // Conver the twitter format, to our 'view model' format
+    const tweetResponse = tweetToResponse(tweetContentSource);
+
+    // Author of a tweet being retweeted isn't the same as the person doing
+    // the retweeting.
+    tweetResponse.retweet_author = getRetweetAuthor(originalTweet);
+
+    // Dig out the 'inner' tweet if it's a quote tweet.
+    if (doesQuoteTweet(tweetContentSource)) {
+        tweetResponse.quotedTweet = tweetToResponse(tweetContentSource.quoted_status);
+    }
+
+    // Check if someone is looking for this reply, which means we're not the
+    // newest reply
+    let replies = seekingRepliesTo.get(originalTweet.id_str);
+
+    // If this tweet itself is a reply to something, we need to mark the
+    // reply as an ID we're looking for
+    if (tweetResponse.replyingToUrl) {
+        if (!replies) {
+            // This is the newest reply, so we can use leave it in the tweet
+            // list, and start tracking. Don't include this tweet itself
+            // because it'll be in the main timeline
+            tweetResponse.replies = replies = [];
+        } else {
+            // Add to the list of replies in this thread
+            replies.unshift(tweetResponse);
+        }
+
+        // Set another map entry for the reply-to so we can capture it if
+        // we encounter it later
+        seekingRepliesTo.set(originalTweet.in_reply_to_status_id_str, replies);
+    } else if (replies) {
+        // If someone is seeking a reply with this ID, but this tweet itself
+        // isn't a reply, thats the *start* of the thread, so we can can
+        // insert the item at the beginning of the thread
+        replies.unshift(tweetResponse);
+    }
+
+    // If someone was seeking the ID to reply to, don't include it in the
+    // tweet list, since it'll be included in the 'newest' tweet in the
+    // thread.
+    // Note, this is predicated on the assumption that the tweets being
+    // processed are in verse chronological order.
+    if (seekingRepliesTo.has(originalTweet.id_str)) {
+        return null;
+    }
+
+    return tweetResponse;
+}
+
+async function plumpOutTheReplies(seekingRepliesTo: Map<string, api.TweetResponse[]>): Promise<boolean> {
+    // See what tweets we don't have replies to
+    const repliesToRequest = new Set<string>();
+    for (const [_, replies] of seekingRepliesTo) {
+        if (replies.length < 1) {
+            continue;
+        }
+
+        const oldestReply = replies[0];
+        if (!oldestReply.replyingToId) {
+            continue;
+        }
+
+        repliesToRequest.add(oldestReply.replyingToId);
+    }
+
+    // Nothing was missing a reply!
+    if (!repliesToRequest.size) {
+        return false;
+    }
+
+    // Now we need to run a bunch of things to ground
+    const threads = await v1.lookupTweets([...repliesToRequest]);
+    threads.forEach((tweet) => {
+        convertTweetIntoResponse(tweet, seekingRepliesTo);
+    });
+
+    return true;
+}
+
 async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse> {
     const cannedResponseRequested = (event.queryStringParameters["canned"] == "true");
 
@@ -94,65 +185,16 @@ async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse
     const seekingRepliesTo: Map<string, api.TweetResponse[]> = new Map();
 
     body.tweets = result.reduce<api.TweetResponse[]>((items, originalTweet) => {
-        // Skip it if it's not a reply to us
-        if (isReplyToSomeoneElse(originalTweet)) {
-            return items;
-        }
-
-        // Determine the source of the content -- retweets get the actual thing
-        // being retweeted
-        const tweetContentSource = (isRetweet(originalTweet) ? originalTweet.retweeted_status : originalTweet);
-
-        // Conver the twitter format, to our 'view model' format
-        const tweetResponse = tweetToResponse(tweetContentSource);
-
-        // Author of a tweet being retweeted isn't the same as the person doing
-        // the retweeting.
-        tweetResponse.retweet_author = getRetweetAuthor(originalTweet);
-
-        // Dig out the 'inner' tweet if it's a quote tweet.
-        if (doesQuoteTweet(tweetContentSource)) {
-            tweetResponse.quotedTweet = tweetToResponse(tweetContentSource.quoted_status);
-        }
-
-        // Check if someone is looking for this reply, which means we're not the
-        // newest reply
-        let replies = seekingRepliesTo.get(originalTweet.id_str);
-
-        // If this tweet itself is a reply to something, we need to mark the
-        // reply as an ID we're looking for
-        if (tweetResponse.replyingToUrl) {
-            if (!replies) {
-                // This is the newest reply, so we can use leave it in the tweet
-                // list, and start tracking. Don't include this tweet itself
-                // because it'll be in the main timeline
-                tweetResponse.replies = replies = [];
-            } else {
-                // Add to the list of replies in this thread
-                replies.unshift(tweetResponse);
-            }
-
-            // Set another map entry for the reply-to so we can capture it if
-            // we encounter it later
-            seekingRepliesTo.set(originalTweet.in_reply_to_status_id_str, replies);
-        } else if (replies) {
-            // If someone is seeking a reply with this ID, but this tweet itself
-            // isn't a reply, thats the *start* of the thread, so we can can
-            // insert the item at the beginning of the thread
-            replies.unshift(tweetResponse);
-        }
-
-        // If someone was seeking the ID to reply to, don't include it in the
-        // tweet list, since it'll be included in the 'newest' tweet in the
-        // thread.
-        // Note, this is predicated on the assumption that the tweets being
-        // processed are in verse chronological order.
-        if (!seekingRepliesTo.has(originalTweet.id_str)) {
-            items.push(tweetResponse);
+        const tweet = convertTweetIntoResponse(originalTweet, seekingRepliesTo);
+        if (tweet) {
+            items.push(tweet);
         }
 
         return items;
     }, []);
+
+    // Now fill out any replies where we don't have a total thread
+    while (await plumpOutTheReplies(seekingRepliesTo));
 
     return {
         statusCode: 200,

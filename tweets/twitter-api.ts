@@ -26,6 +26,10 @@ const v2 = {
 const v1 = {
     async getTimeLineForUserByHandle(screen_name: string): Promise<twypesv1.Tweet[]> {
         return getFromTwitterWithType(`https://api.twitter.com/1.1/statuses/user_timeline.json?tweet_mode=extended&screen_name=${screen_name}`);
+    },
+    async lookupTweets(ids: string[]): Promise<twypesv1.Tweet[]> {
+        const idsCombined = ids.join(",");
+        return getFromTwitterWithType(`https://api.twitter.com/1.1/statuses/lookup.json?id=${idsCombined}&tweet_mode=extended`);
     }
 };
 
