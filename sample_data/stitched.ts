@@ -35,8 +35,8 @@ function shuffle(items: Tweet[]) {
 export default function stitched(): TweetV1[] {
     const tweets: TweetV1[] = [
         sample_tweet,
-        sample_reply,
         sample_reply_to_other_account,
+        sample_reply,
         sample_retweet,
         sample_quote_tweet,
         sample_retweet_quote_tweet,
@@ -44,11 +44,11 @@ export default function stitched(): TweetV1[] {
         sample_multiple_pictures,
         sample_animated_gif,
         sample_video,
-        sample_thread_start,
-        sample_thread_2
     ];
 
     shuffle(tweets);
+
+    tweets.push(sample_thread_2, sample_thread_start);
 
     return tweets;
 }

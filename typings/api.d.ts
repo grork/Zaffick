@@ -13,7 +13,9 @@ declare interface TweetResponse {
     author_url: string;
     retweet_author?: string;
     quotedTweet?: TweetResponse;
-    replyingTo?: string;
+    replyingToUrl?: string;
+    replyingToId?: string;
+    replies?: TweetResponse[];
 }
 
 export declare interface LatestResponse {

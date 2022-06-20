@@ -65,7 +65,7 @@ function getVideoFromTweet(tweet: twypes.Tweet): api.VideoInfo {
     }
 }
 
-function tweetToResponse(tweet: twypes.Tweet): Omit<api.TweetResponse, "type"> {
+function tweetToResponse(tweet: twypes.Tweet): api.TweetResponse {
     return {
         content: getContentFromTweet(tweet),
         url: `https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`,
@@ -74,7 +74,8 @@ function tweetToResponse(tweet: twypes.Tweet): Omit<api.TweetResponse, "type"> {
         posted: tweet.created_at,
         author: tweet.user.screen_name,
         author_url: `https://twitter.com/${tweet.user.screen_name}`,
-        replyingTo: tweet.in_reply_to_status_id_str ? `https://twitter.com/${tweet.in_reply_to_screen_name}/status/${tweet.in_reply_to_status_id_str}`: undefined
+        replyingToUrl: tweet.in_reply_to_status_id_str ? `https://twitter.com/${tweet.in_reply_to_screen_name}/status/${tweet.in_reply_to_status_id_str}` : undefined,
+        replyingToId: tweet.in_reply_to_status_id_str
     };
 }
 
@@ -90,25 +91,65 @@ async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse
     }
 
     const body: api.LatestResponse = { tweets: [] };
+    const seekingRepliesTo: Map<string, api.TweetResponse[]> = new Map();
 
     body.tweets = result.reduce<api.TweetResponse[]>((items, originalTweet) => {
+        // Skip it if it's not a reply to us
         if (isReplyToSomeoneElse(originalTweet)) {
             return items;
         }
 
+        // Determine the source of the content -- retweets get the actual thing
+        // being retweeted
         const tweetContentSource = (isRetweet(originalTweet) ? originalTweet.retweeted_status : originalTweet);
 
+        // Conver the twitter format, to our 'view model' format
         const tweetResponse = tweetToResponse(tweetContentSource);
+
+        // Author of a tweet being retweeted isn't the same as the person doing
+        // the retweeting.
         tweetResponse.retweet_author = getRetweetAuthor(originalTweet);
+
+        // Dig out the 'inner' tweet if it's a quote tweet.
         if (doesQuoteTweet(tweetContentSource)) {
             tweetResponse.quotedTweet = tweetToResponse(tweetContentSource.quoted_status);
         }
 
-        if (tweetResponse.replyingTo) {
-            // Get 
+        // Check if someone is looking for this reply, which means we're not the
+        // newest reply
+        let replies = seekingRepliesTo.get(originalTweet.id_str);
+
+        // If this tweet itself is a reply to something, we need to mark the
+        // reply as an ID we're looking for
+        if (tweetResponse.replyingToUrl) {
+            if (!replies) {
+                // This is the newest reply, so we can use leave it in the tweet
+                // list, and start tracking. Don't include this tweet itself
+                // because it'll be in the main timeline
+                tweetResponse.replies = replies = [];
+            } else {
+                // Add to the list of replies in this thread
+                replies.unshift(tweetResponse);
+            }
+
+            // Set another map entry for the reply-to so we can capture it if
+            // we encounter it later
+            seekingRepliesTo.set(originalTweet.in_reply_to_status_id_str, replies);
+        } else if (replies) {
+            // If someone is seeking a reply with this ID, but this tweet itself
+            // isn't a reply, thats the *start* of the thread, so we can can
+            // insert the item at the beginning of the thread
+            replies.unshift(tweetResponse);
         }
 
-        items.push(tweetResponse);
+        // If someone was seeking the ID to reply to, don't include it in the
+        // tweet list, since it'll be included in the 'newest' tweet in the
+        // thread.
+        // Note, this is predicated on the assumption that the tweets being
+        // processed are in verse chronological order.
+        if (!seekingRepliesTo.has(originalTweet.id_str)) {
+            items.push(tweetResponse);
+        }
 
         return items;
     }, []);

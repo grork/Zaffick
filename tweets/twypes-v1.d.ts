@@ -35,7 +35,7 @@ export declare interface Tweet {
     id_str: string;
     full_text: string;
     truncated: boolean;
-    display_text_range: [number, number];
+    display_text_range: number[];
     entities: { urls: UrlEntity[] };
     in_reply_to_status_id_str?: string;
     in_reply_to_screen_name?: string;

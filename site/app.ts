@@ -68,7 +68,7 @@ function getTweetTraits(tweet: api.TweetResponse): string {
         tweetTypes.push("quote");
     }
 
-    if (tweet.replyingTo) {
+    if (tweet.replyingToUrl) {
         tweetTypes.push("reply");
     }
 
@@ -97,7 +97,7 @@ function getTweetTypeSymbol(tweet: api.TweetResponse): string {
         return "format_quote"
     }
 
-    if (tweet.replyingTo) {
+    if (tweet.replyingToId) {
         return "reply";
     }
 
@@ -136,6 +136,7 @@ function generateTweet(tweet: api.TweetResponse, container: Element): void {
         type: HTMLElement
         postedAt: HTMLAnchorElement
         quoteContainer: HTMLElement,
+        repliesContainer: HTMLElement,
         reply: HTMLAnchorElement
     } = cloneIntoWithPartsFromName("tweet", container);
 
@@ -158,12 +159,23 @@ function generateTweet(tweet: api.TweetResponse, container: Element): void {
         parts.quoteContainer.parentElement?.removeChild(parts.quoteContainer);
     }
 
+    if (tweet.replies?.length) {
+        tweet.replies.forEach((tweet) => {
+            const replyContainer = document.createElement("div");
+            replyContainer.classList.add("tweet-container");
+            generateTweet(tweet, replyContainer);
+            parts.repliesContainer.appendChild(replyContainer);
+        });
+    } else {
+        parts.repliesContainer.parentElement?.removeChild(parts.repliesContainer);
+    }
+
     parts.type.textContent = getTweetTypeSymbol(tweet);
     parts.postedAt.textContent = formatTimeAgo(new Date(tweet.posted));
     parts.postedAt.href = tweet.url;
 
-    if (tweet.replyingTo) {
-        parts.reply.href = tweet.replyingTo;
+    if (tweet.replyingToUrl) {
+        parts.reply.href = tweet.replyingToUrl;
     } else {
         parts.reply.parentElement?.removeChild(parts.reply);
     }
