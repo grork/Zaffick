@@ -1,5 +1,5 @@
 import * as nfunc from "@netlify/functions";
-import { v1 } from "../../tweets/timeline";
+import { v1 } from "../../tweets/twitter-api";
 import * as twypes from "../../tweets/twypes-v1";
 import * as api from "../../typings/api";
 import stitched from "../../sample_data/stitched";
