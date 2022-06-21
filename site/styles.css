@@ -127,6 +127,7 @@ video {
     flex-wrap: nowrap;
     gap: 12px;
     margin-top: var(--border-curve);
+    margin-bottom: 10vh;
 }
 
 .tweet-info-container {
