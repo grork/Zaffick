@@ -6,6 +6,8 @@
     color-scheme: light dark;
     --border-curve: 8px;
     --tweet-border-colour: rgb(199, 199, 199);
+    --archived-note-background-colour: rgb(248, 248, 248);
+    --archived-note-border-colour: rgb(197, 197, 197);
     --text-colour: rgb(49, 49, 49);
     --heading-colour: black;
     --nested-text-colour: rgb(119, 119, 119);
@@ -15,6 +17,8 @@
 @media (prefers-color-scheme: dark) {
     :root {
         --tweet-border-colour: rgb(103, 103, 103);
+        --archived-note-background-colour: rgb(224, 223, 223);
+        --archived-note-border-colour: rgb(197, 197, 197);
         --text-colour: rgb(200, 200, 200);
         --heading-colour: white;
         --nested-text-colour: rgb(172, 172, 172);
@@ -143,6 +147,20 @@ video {
 .material-symbols-outlined {
     font-size: 1.2em;
     transform: translateY(1px);
+}
+
+body:not(.archived-data) .archived-note {
+    display: none;
+}
+
+.archived-note {
+    background-color: var(--archived-note-background-colour);
+    border-radius: var(--border-curve);
+    border-color: var(--archived-note-border-colour);
+    border-width: 1px;
+    border-style: solid;
+    padding: 12px;
+    margin-bottom: 8px;
 }
 
 @media only screen and (max-width: 768px) {

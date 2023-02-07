@@ -2,7 +2,7 @@ import * as nfunc from "@netlify/functions";
 import { v1 } from "../../tweets/twitter-api";
 import * as twypes from "../../tweets/twypes-v1";
 import * as api from "../../typings/api";
-import stitched from "../../sample_data/stitched";
+import { default as stitched, archived } from "../../sample_data/stitched";
 import * as tt from "twitter-text";
 
 function isRetweet(tweet: twypes.Tweet): boolean {
@@ -176,25 +176,43 @@ async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse
     let result: twypes.Tweet[] = [];
 
     if (!cannedResponseRequested) {
-        result = await v1.getTimeLineForUserByHandle("wsdot_traffic");
+        try {
+            result = await v1.getTimeLineForUserByHandle("wsdot_traffic");
+        } catch {
+            // If the twitter API throws (E.g., auth token is bad, service is
+            // down), default to empty results -- we'll fix it up later
+            result = [];
+        }
     } else {
         result = stitched();
     }
 
-    const body: api.LatestResponse = { tweets: [] };
-    const seekingRepliesTo: Map<string, api.TweetResponse[]> = new Map();
+    const body: api.LatestResponse = {
+        tweets: [],
+        isArchivedData: false
+    };
 
-    body.tweets = result.reduce<api.TweetResponse[]>((items, originalTweet) => {
-        const tweet = convertTweetIntoResponse(originalTweet, seekingRepliesTo);
-        if (tweet) {
-            items.push(tweet);
-        }
+    // If we got some results, we should process them
+    if (result.length) {
+        const seekingRepliesTo: Map<string, api.TweetResponse[]> = new Map();
 
-        return items;
-    }, []);
+        body.tweets = result.reduce<api.TweetResponse[]>((items, originalTweet) => {
+            const tweet = convertTweetIntoResponse(originalTweet, seekingRepliesTo);
+            if (tweet) {
+                items.push(tweet);
+            }
 
-    // Now fill out any replies where we don't have a total thread
-    while (await plumpOutTheReplies(seekingRepliesTo));
+            return items;
+        }, []);
+
+        // Now fill out any replies where we don't have a total thread
+        while (await plumpOutTheReplies(seekingRepliesTo));
+    } else {
+        // Some how we didn't get a result from the service, so we're going to
+        // use an archived *response*
+        body.isArchivedData = true;
+        body.tweets = archived();
+    }
 
     return {
         statusCode: 200,

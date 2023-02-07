@@ -192,6 +192,7 @@ async function loadTopTweets() {
     }
 
     const result: api.LatestResponse = await (await fetch(function_query)).json();
+    document.body.classList.toggle("archived-data", result.isArchivedData);
     for (let m of result.tweets) {
         let container: HTMLElement = document.createElement("div");
         container.classList.add("tweet-container");

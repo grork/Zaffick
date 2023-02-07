@@ -1,4 +1,5 @@
 import { Tweet, Tweet as TweetV1 } from "../tweets/twypes-v1";
+import * as api from "../typings/api";
 import sample_tweet from "./tweet.json";
 import sample_reply from "./reply.json";
 import sample_reply_to_other_account from "./reply_to_other_account.json";
@@ -11,6 +12,9 @@ import sample_video from "./video.json";
 import sample_retweet_quote_tweet from "./retweet_quote.json";
 import sample_thread_start from "./thread_start.json";
 import sample_thread_2 from "./thread_2.json";
+import archive0 from "./feb-6-2023-10_27.json";
+import archive1 from "./feb-6-2023-13_12.json";
+import archive2 from "./feb-7-2023-8_32.json";
 
 
 // Borrowed from https://stackoverflow.com/a/2450976
@@ -51,4 +55,16 @@ export default function stitched(): TweetV1[] {
     tweets.push(sample_thread_2, sample_thread_start);
 
     return tweets;
+}
+
+export function archived(): api.TweetResponse[] {
+    switch (Math.floor(Math.random() * 3)) {
+        case 0:
+            return archive0.tweets;
+        case 1:
+            return archive1.tweets;
+        case 3:
+        default:
+            return archive2.tweets;
+    }
 }

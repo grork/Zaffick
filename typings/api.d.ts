@@ -20,4 +20,5 @@ declare interface TweetResponse {
 
 export declare interface LatestResponse {
     tweets: TweetResponse[];
+    isArchivedData: boolean;
 }
