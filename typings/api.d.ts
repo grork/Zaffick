@@ -4,6 +4,7 @@ export declare interface VideoInfo {
 }
 
 declare interface TweetResponse {
+    id: string;
     url: string;
     content: string;
     images?: string[];

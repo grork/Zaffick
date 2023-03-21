@@ -57,37 +57,6 @@ function formatTimeAgo(date: Date): string {
 
 //#endregion
 
-function getTweetTraits(tweet: api.TweetResponse): string {
-    let tweetTypes: string[] = [];
-
-    if (tweet.retweet_author) {
-        tweetTypes.push("retweet");
-    }
-
-    if (tweet.quotedTweet) {
-        tweetTypes.push("quote");
-    }
-
-    if (tweet.replyingToUrl) {
-        tweetTypes.push("reply");
-    }
-
-    if (!tweetTypes.length) {
-        // Must just be a tweet
-        tweetTypes.push("tweet");
-    }
-
-    if (tweet.images?.length) {
-        tweetTypes.push("images");
-    }
-
-    if (tweet.video) {
-        tweetTypes.push("video");
-    }
-
-    return tweetTypes.join(" + ");;
-}
-
 function getTweetTypeSymbol(tweet: api.TweetResponse): string {
     if (tweet.retweet_author) {
         return "repeat";
@@ -181,21 +150,33 @@ function generateTweet(tweet: api.TweetResponse, container: Element): void {
     }
 }
 
-async function loadTopTweets() {
+async function loadTopTweets(max_id?: string) {
     const timeline = document.querySelector("[data-id='timeline']")!;
-    timeline.innerHTML = "";
-
-    const params = new URLSearchParams(window.location.search);
-    let function_query = BASE_FUNCTION_PATH;
-    if (params.get("canned") === "true") {
-        function_query += "?canned=true";
+    if (!max_id) {
+        // If there wasn't a max_id supplied, that impiles it's a load of the
+        // top of the list or a refresh, so ensure we clear any existing content
+        timeline.innerHTML = "";
     }
 
+    const params = new URLSearchParams(window.location.search);
+    const service_params = [];
+    if (params.get("canned") === "true") {
+        service_params.push("canned=true")
+    }
+
+    if (max_id) {
+        service_params.push(`max_id=${max_id}`);
+    }
+
+    const function_query = `${BASE_FUNCTION_PATH}${(service_params.length ? "?" : "")}${service_params.join("&")}`;
     const result: api.LatestResponse = await (await fetch(function_query)).json();
     document.body.classList.toggle("archived-data", result.isArchivedData);
     for (let m of result.tweets) {
         let container: HTMLElement = document.createElement("div");
         container.classList.add("tweet-container");
+        
+        // Set the tweet id so we can leverage for paging in the tweets later
+        container.setAttribute("tweet-id", m.id);
 
         generateTweet(m, container);
 
@@ -203,10 +184,39 @@ async function loadTopTweets() {
     }
 }
 
+let pendingLoad = false;
+
 document.addEventListener("DOMContentLoaded", function () {
+    const timeline = document.querySelector("[data-id='timeline']")!;
     const doit = document.querySelector("[data-id='doit']")!;
 
-    doit.addEventListener("click", loadTopTweets);
+    doit.addEventListener("click", () => loadTopTweets());
+
+    // When scrolling, we're going to load a new set of tweets if we aren't
+    // already loading some new tweets. Not perfect 'cause maybe we'll get stuck
+    // at the bottom, but this is a low-grade side for just us.
+    document.addEventListener("scroll", async () => {
+        if (pendingLoad) {
+            return;
+        }
+
+        const lastElement = timeline.lastElementChild as HTMLElement;
+        if (!lastElement) {
+            return;
+        }
+
+        const position = lastElement.getBoundingClientRect();
+        if (position.bottom <= document.body.clientHeight) {
+            var tweet_id = lastElement.getAttribute("tweet-id");
+            if (!tweet_id) {
+                return;
+            }
+
+            pendingLoad = true;
+            await loadTopTweets(tweet_id);
+            pendingLoad = false;
+        }
+    });
     loadTopTweets();
 });
 

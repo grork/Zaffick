@@ -67,6 +67,7 @@ function getVideoFromTweet(tweet: twypes.Tweet): api.VideoInfo {
 
 function tweetToResponse(tweet: twypes.Tweet): api.TweetResponse {
     return {
+        id: tweet.id_str,
         content: getContentFromTweet(tweet),
         url: `https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`,
         images: getImagesFromTweet(tweet),
@@ -172,12 +173,13 @@ async function plumpOutTheReplies(seekingRepliesTo: Map<string, api.TweetRespons
 
 async function handler(event: nfunc.HandlerEvent): Promise<nfunc.HandlerResponse> {
     const cannedResponseRequested = (event.queryStringParameters["canned"] == "true");
+    const maxId = event.queryStringParameters["max_id"];
 
     let result: twypes.Tweet[] = [];
 
     if (!cannedResponseRequested) {
         try {
-            result = await v1.getTimeLineForUserByHandle("wsdot_traffic");
+            result = await v1.getTimeLineForUserByHandle("wsdot_traffic", maxId);
         } catch {
             // If the twitter API throws (E.g., auth token is bad, service is
             // down), default to empty results -- we'll fix it up later
